@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="/javascripts/authscript.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styleAuth.css" />
+    <title>Авторизация пользователей</title>
+</head>
+<body>
+
+<form id="authForm" onsubmit="return false">
+  <h2><span class="entypo-login"><i class="sign-in"></i></span> Войдите в систему</h2>
+  <button id="button" onclick="login()"><span class="entypo-lock"><i class="lock"></i></span></button>
+  <span class="entypo-user inputUserIcon">
+     <i class="user"></i>
+   </span>
+  <input type="text" id="user" placeholder="login"/>
+  <span class="entypo-key inputPassIcon">
+     <i class="key"></i>
+   </span>
+  <input type="password" id="pass"placeholder="password"/>
+  <input type="text" id="messageBox" readonly>
+</form>
+
+</body>
+</html>

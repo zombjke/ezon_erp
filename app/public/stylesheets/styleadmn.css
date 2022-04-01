@@ -1,0 +1,326 @@
+.topButtons {
+    position: fixed;
+    top: 0%;
+    left: 5px;
+    right: 5px;
+    background-color: #ffffff;
+    z-index: 100;
+    
+}
+
+.button {
+    margin-top: 5px;
+    margin-left: 5px;
+    background-color: #7eb680; /* Green */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #4a8870; /* Green */
+}
+
+#addNewUserButton, #addNewTaskButton {
+    position: fixed;
+    top: 65px;
+    background-color: #7190d1;
+    z-index: 100;
+    
+}
+#addNewUserButton:hover, #addNewTaskButton:hover {
+    background-color: #767b86;
+}
+
+#logOutButton {
+    position: absolute;
+    right: 5px;
+}
+
+.userstable, .taskstable {
+position: relative;
+margin-top: 130px;
+width: 100%;
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 14px;
+border-collapse: collapse;
+text-align: center;
+table-layout: auto;
+}
+
+
+.userstable th, .userstable td:first-child, .taskstable th {
+    background: #AFCDE7;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+ }
+ 
+ .userstable th, .color td, .taskstable th {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: white;
+ }
+ 
+ .userstable tr, .taskstable tr{
+    background: #D8E6F3;
+    border-style: solid;
+    border-width: 1px;
+    border-bottom-color: white;
+ }
+ .userstable tr:hover, .taskstable tr:hover{
+    background: #eeeef0; 
+ }
+ .col_1{
+    width: 1%;
+}
+.col_2{
+   width: 5%;
+}
+.col_3{
+   width: 8%;
+}
+.col_4{
+   width: 8%;
+}
+.col_5{
+    width: 2%;
+ }
+
+.tasks_col_1{
+width: 1%;
+}
+.tasks_col_2{
+width: 5%;     
+}
+.tasks_col_3{
+width: 8%;     
+}
+.tasks_col_4{
+width: 8%;     
+}
+.tasks_col_5{
+width: 10%;     
+}
+.tasks_col_6{
+width: 8%;     
+}
+.tasks_col_7{
+width: 8%;     
+}
+.tasks_col_8{
+width: 10%;     
+}
+.tasks_col_9{
+width: 5%;     
+}
+.tasks_col_10{
+width: 5%;     
+}
+.tasks_col_11{
+    width: 5%;      
+}
+.tasks_col_12{
+    width: 8%;      
+}
+.tasks_col_13{
+    width: 2%;      
+}
+
+.userDetailForm {
+    width: 400px;
+    box-shadow: 0px 0px 15px -3px #000000;
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    z-index: 9;
+    background-color: white;
+      
+}
+
+#formNewPassId{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    padding-left: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+ 
+}
+.submitBtns{
+    margin-top: 5%;
+}
+
+
+
+.userDetailHeader, .newUserFormHeader, .addNewTaskHeader, .detailTaskFormIdHeader, .checkTypeOfWorkHeader {
+    height: 20px;
+    background-color: #858282;
+    cursor: move;
+    z-index: 10;
+    text-align: center;
+    color: #ffffff;
+}
+
+.userDetailInfo{
+    width: 100%;
+    align-items:center;
+    position: relative;
+    display: flex;
+    
+    
+ 
+}
+.userDetailInfo p{
+    margin-left: 40%;
+    
+    
+ 
+}
+.column{
+    flex: 40%;
+    padding-left: 1%;
+    padding-top: 2%;
+}
+.userDetailSubButtons, .detailTaskSubButtons, .newTaskSubButtons, .typeOfWorksubButtons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    
+}
+.submitButton {
+   margin-left: 10%;
+   margin-right: 10%;
+    background-color: #91b7c9; /* Green */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    
+    
+}
+.submitButton:hover {
+    background-color: #6e8792; /* Green */
+}
+
+.noselectable {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+   color: #767b86;
+    border: none;
+}
+
+.delUserBtn {
+    z-index: 50;
+}
+.addNewTask{
+    padding-top: 2%;
+    padding-left: 5%;
+}
+.newTaskForm {
+    width: 350px;
+    box-shadow: 0px 0px 15px -3px #000000;
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    z-index: 9;
+    background-color: white;
+}
+
+.detailTaskForm, .checkTypeOfWork {
+    width: 500px;
+    box-shadow: 0px 0px 15px -3px #000000;
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    z-index: 9;
+    background-color: white;
+}
+
+.detailTaskInfo {
+    text-align: center;
+    line-height: 30px;
+    padding-left: 1%;
+    padding-right: 1%;      
+  
+}
+
+.detailTaskInfo textarea{
+    width: 100%;
+    height: 100px;
+    resize: none;
+}
+.addPartNumber{
+    width: 100%;
+     table-layout: fixed; 
+    
+    
+    
+}
+.count {
+    width: 36px;
+   
+}
+.partLable{
+    font-size: 12px;
+    color: #858282;
+}
+.printMenuButton{
+    position: absolute;
+    text-align: right;
+    right: 5px;
+    top: 20px;
+}
+.printMenuButton img{
+    max-width: 28px;
+    max-height: 28px;
+}
+.printOptions{
+    text-align: center;
+    background-color: #e4f1f8;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.22);
+    overflow: hidden;
+    cursor: pointer;   
+}
+.printOptions div:hover{
+    box-shadow: inset 0 0 5px 5px rgba(0,0,0,0.5);
+}
+.printMenuButton .printOptions div:hover {
+    background: #91b7c9;/*окрашивает синим цветом*/
+    color: #fff;/*меняет цвет текста*/
+    box-shadow: inset 0 0 5px 0px rgba(0,0,0,0.05);
+}
+.checkTypeOfWork p{
+    text-align: center;
+    font-size: large;
+}
+.checkTypeOfWorkInfo thead, .checkTypeOfWorkInfo td{
+    text-align: center;    
+}
+.checkTypeOfWorkInfo{
+    width: 100%;
+    margin-left: 20px;
+}
+.checkTypeOfWork{
+    width: 700px;
+}
