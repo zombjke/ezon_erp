@@ -65,6 +65,23 @@ isModerator = (req, res, next) => {
   });
 };
 
+isWerehouse = (req, res, next) => {
+  User.findByPk(req.userId).then(user => {
+    user.getRoles().then(roles => {
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === "werehouse") {
+          next();
+          return;
+        }
+      }
+
+      res.status(403).send({
+        message: "Require werehouse Role!"
+      });
+    });
+  });
+};
+
 isModeratorOrAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
@@ -87,10 +104,34 @@ isModeratorOrAdmin = (req, res, next) => {
   });
 };
 
+isWerehouseOrAdmin = (req, res, next) => {
+  User.findByPk(req.userId).then(user => {
+    user.getRoles().then(roles => {
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === "werehouse") {
+          next();
+          return;
+        }
+
+        if (roles[i].name === "admin") {
+          next();
+          return;
+        }
+      }
+
+      res.status(403).send({
+        message: "Require Werehouse or Admin Role!"
+      });
+    });
+  });
+};
+
 const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
   isModerator: isModerator,
-  isModeratorOrAdmin: isModeratorOrAdmin
+  isWerehouse: isWerehouse,
+  isModeratorOrAdmin: isModeratorOrAdmin,
+  isWerehouseOrAdmin: isWerehouseOrAdmin,
 };
 module.exports = authJwt;

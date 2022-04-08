@@ -283,11 +283,52 @@ exports.getAvr = (req, res) => {
             res.send(Promise.reject());
           }
             res.sendFile(__dirname + fileName);      
-         });
-       },2000);
-    
+        });
+      },2000);
+    });
   });
- 
-});
+}
+
+exports.getAvailablity = (req, res) => {
+  pool.query('SELECT * FROM availablity WHERE count > 0', (error, result) => {
+    if (error) throw error;
+  //  console.log(result);
+    res.status(200).send(result);
+  });
+}
+
+exports.getArrival = (req, res) => {
+  pool.query('SELECT * FROM arrival', (error, result) => {
+    if (error) throw error;
+  //  console.log(result);
+    res.status(200).send(result);
+  });
+}
+
+exports.getWriteOff = (req, res) => {
+  pool.query('SELECT * FROM writeoff', (error, result) => {
+    if (error) throw error;
+    //console.log(result);
+    res.status(200).send(result);
+  });
+}
+
+exports.newAvailablity = (req, res) => {
+    if(!req.body) return res.sendStatus(400);
+}
+
+exports.newArrival = (req, res) => {
+  if(!req.body) return res.sendStatus(400);
+  //console.log(req.body.content);
+  let arrs = req.body.content.split('@');
+  console.log(arrs);
+  pool.query('INSERT INTO arrival SET ?', req.body, (error, result) => {
+    if (error) throw error;
+    res.status(200).send(result);
+  });
+}
+
+exports.newWriteOff = (req, res) => {
+  if(!req.body) return res.sendStatus(400);
 
 }

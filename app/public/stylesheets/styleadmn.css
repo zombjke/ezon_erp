@@ -27,15 +27,45 @@
 .button:hover {
     background-color: #4a8870; /* Green */
 }
-
-#addNewUserButton, #addNewTaskButton {
+#addNewUserButton, #addNewTaskButton, #findPartButton, #addToButton, #writeOffButton{
     position: fixed;
     top: 65px;
     background-color: #7190d1;
     z-index: 100;
-    
 }
-#addNewUserButton:hover, #addNewTaskButton:hover {
+.werehouseMenu {
+    z-index: 200;
+    background-color: #e8eaee17;
+     backdrop-filter: blur(2px);
+    padding: 3px;
+    padding-right: 7.5px;
+    padding-bottom: 7.5px;
+    position: fixed;
+     border-radius: 10px;
+     display: table;
+     vertical-align: top;
+     border-width: 0.5px;
+     border-color: #000000;
+     border-style: solid;
+    
+    
+ }
+#listWerehouseButton {
+    display: table-cell;
+    background-color:#cf9f68 ;
+}
+#arrivalToWerehouseButton{
+    display: table-cell;
+    background-color:#cf9f68 ;
+    left: 90px;
+}
+#writeOffFromWerehouseButton{
+    display: table-cell;
+    background-color:#cf9f68 ;
+    left: 172px;
+}
+
+#addNewUserButton:hover, #addNewTaskButton:hover, #listWerehouseButton:hover, #arrivalToWerehouseButton:hover, #writeOffFromWerehouseButton:hover, #findPartButton:hover, #addToButton:hover, #writeOffButton:hover {
     background-color: #767b86;
 }
 
@@ -44,7 +74,7 @@
     right: 5px;
 }
 
-.userstable, .taskstable {
+.userstable, .taskstable, .werehouseTable {
 position: relative;
 margin-top: 130px;
 width: 100%;
@@ -56,25 +86,25 @@ table-layout: auto;
 }
 
 
-.userstable th, .userstable td:first-child, .taskstable th {
+.userstable th, .userstable td:first-child, .taskstable th, .werehouseTable th, .werehouseTable td:first-child {
     background: #AFCDE7;
     color: rgb(0, 0, 0);
     padding: 10px 20px;
  }
  
- .userstable th, .color td, .taskstable th {
+ .userstable th, .color td, .taskstable th, .werehouseTable th {
     border-style: solid;
     border-width: 0 1px 1px 0;
     border-color: white;
  }
  
- .userstable tr, .taskstable tr{
+ .userstable tr, .taskstable tr, .werehouseTable tr{
     background: #D8E6F3;
     border-style: solid;
     border-width: 1px;
     border-bottom-color: white;
  }
- .userstable tr:hover, .taskstable tr:hover{
+ .userstable tr:hover, .taskstable tr:hover, .werehouseTable tr:hover{
     background: #eeeef0; 
  }
  .col_1{
@@ -132,6 +162,15 @@ width: 5%;
 .tasks_col_13{
     width: 2%;      
 }
+.col-list1{
+    width: 1%;
+}
+.col-list2{
+    width: 25%;
+}
+.col-list3{
+    width: 60%;
+}
 
 .userDetailForm {
     width: 400px;
@@ -160,7 +199,7 @@ width: 5%;
 
 
 
-.userDetailHeader, .newUserFormHeader, .addNewTaskHeader, .detailTaskFormIdHeader, .checkTypeOfWorkHeader {
+.userDetailHeader, .newUserFormHeader, .addNewTaskHeader, .addToHeader, .detailTaskFormIdHeader, .checkTypeOfWorkHeader {
     height: 20px;
     background-color: #858282;
     cursor: move;
@@ -189,7 +228,7 @@ width: 5%;
     padding-left: 1%;
     padding-top: 2%;
 }
-.userDetailSubButtons, .detailTaskSubButtons, .newTaskSubButtons, .typeOfWorksubButtons {
+.userDetailSubButtons, .addToSubButtons, .detailTaskSubButtons, .newTaskSubButtons, .typeOfWorksubButtons {
     margin-top: 10px;
     margin-bottom: 10px;
     display: flex;
@@ -247,7 +286,7 @@ width: 5%;
     background-color: white;
 }
 
-.detailTaskForm, .checkTypeOfWork {
+.detailTaskForm, .checkTypeOfWork, .addTo {
     width: 500px;
     box-shadow: 0px 0px 15px -3px #000000;
     position: fixed;
@@ -256,15 +295,27 @@ width: 5%;
     z-index: 9;
     background-color: white;
 }
+.addTo {
+    width: 800px;
+}
 
-.detailTaskInfo {
+
+.detailTaskInfo, .addToContent table {
     text-align: center;
     line-height: 30px;
     padding-left: 1%;
     padding-right: 1%;      
   
 }
-
+#fromWho {
+    margin-left: 1%;
+    margin-top: 1%;
+    align-self: left;
+    padding: 1%;
+}
+/* .addToContent table {
+    width: 100%;
+} */
 .detailTaskInfo textarea{
     width: 100%;
     height: 100px;

@@ -1,3 +1,5 @@
+
+
 window.onbeforeunload = function() {
     document.cookie = `x-access-token=${getCookie('x-access-token')}; max-age=-1;`;
   };
@@ -35,7 +37,13 @@ function storePage(){
 }
 /**обработка кнопки СКЛАД */
 function werehousePage(){
-    addTopButtons();
+    if (!document.getElementById('werehouseMenuId')){
+        addSelfButtons();
+    }else{
+        cancelForm('werehouseMenuId');
+    }
+    
+   
 }
 /**обработка кнопки ОТЧЕТ */
 function reportPage(){
@@ -47,19 +55,38 @@ function addTopButtons(){
     document.body.innerHTML = "";
     document.body.innerHTML = html;
 }
+/**создаем навигацию проскладу */
+function addSelfButtons(){
+    let cords = document.getElementById('werehButton').getBoundingClientRect();
+    let div = document.createElement('div');
+    div.id = 'werehouseMenuId';
+    div.className = 'werehouseMenu';
+    document.body.append(div);
+    div.style.left = (cords.left - 63) + 'px';
+    div.style.top = cords.bottom + 20 + 'px';
+    addButton('listWerehouseButton', '=', listWerehouse, div.id); // список товара на складе
+    addButton('arrivalToWerehouseButton', '+', arrivalToWerehouse, div.id); //список прихода
+    addButton('writeOffFromWerehouseButton', '-', writeOffFromWerehouse, div.id); //списание со склада
+    
+}
+
 /**создание кнопки добавления нового пользователя 
  id = string, ID будущей кнопки
  val = string, value будущей кнопки
  func = имя функции сработающей по клику */
-function addButton(id, val, func){
+function addButton(id, val, func, where){
     if (!document.getElementById(id)){
+        let loc;
         let btn = document.createElement('input');
         btn.className = "button";
         btn.id = id;
         btn.type = "button";
         btn.value = val;
         btn.addEventListener('click', func);
-        document.body.append(btn);
+        where!=undefined ? loc = document.getElementById(where) : loc = document.body;
+            
+    
+        loc.append(btn);
     }
 }
 /** создание таблицы пользователей*/ 
@@ -98,6 +125,8 @@ function chooseRole(val){
             return "Менеджер";
         case 3:
             return "Администратор";
+        case 4:
+            return "Зав склад";
     }
 }
 /**детали о пользователе */
@@ -497,10 +526,17 @@ async function getInfoParts(pnumber, id){
                 },
             });
         let result = await response.json();
+        let shortId = id.slice(0, 5);
         if (result.length > 0){
-            document.getElementById(id).innerText = result[0].description;
+            if (shortId == 'input'){
+                document.getElementById(id).value = result[0].description;
+            }else{
+                document.getElementById(id).innerHTML = result[0].description;
+            };
+            
         }else{
-            document.getElementById(id).innerText = "Некорректный партномер!"
+
+            document.getElementById(id).innerHTML = "Некорректный партномер!"
         }
     }    
 }
@@ -666,6 +702,164 @@ async function getACTofComplite(id){
     let pdfObj = URL.createObjectURL(pdf);
     window.open(pdfObj);
 }
+/**таблица списка наличия товаров на складе */
+function listWerehouse(){
+    addTopButtons();
+    addButton('findPartButton', '?', findPart);
+    createTableOfWerehouse(1);
+    getDataToWerehouseTable(1);
+}
+/**таблица списка приходов на склад */
+function arrivalToWerehouse(){
+    addTopButtons();
+    addButton('addToButton', '+', addTo);
+    createTableOfWerehouse(2);
+    getDataToWerehouseTable(2);
+}
+/**таблица списаний со склада */
+function writeOffFromWerehouse(){
+    addTopButtons();
+    addButton('writeOffButton', '+', writeOff);
+    createTableOfWerehouse(3);
+    getDataToWerehouseTable(3);
+}
+/**поиск детали */
+function findPart(){
+
+}
+/** добавление на склад */
+function addTo(){
+    let form = document.createElement('form');
+    form.id = 'addToId';
+    form.className = 'addTo';
+    form.innerHTML = `<div id="addToIdHeader" class="addToHeader"></div><div id="addToContent" class="addToContent"><select id="fromWho"><option value="0">Покупка</option><option value="1">EPSON</option></select><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Количество</td><td>Цена</td></tr></thead><tbody id="addToBody"></tbody></table></div><div class="addToSubButtons"><input type="button" class="submitButton" onclick="saveAddTo()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('addToId')" value="Отмена"></div>`;
+    document.body.append(form);
+    addRowForWerehouse(0);
+    dragElement(document.getElementById("addToId"));
+}
+/**списание со склада */
+function writeOff(){
+
+}
+/**сохранение формы пополнения склада */
+async function saveAddTo(){
+    let dataObj = {
+        'fromWho': document.getElementById('fromWho').value,
+        'partsCount': 0,
+        'sum': 0,
+        'content': '',
+    };
+    
+    let trs = document.getElementById('addToBody').querySelectorAll('tr')
+        for(let i=0;i<trs.length;i++){
+            let inputs = trs[i].querySelectorAll('input');
+            if (inputs[1].value.trim().length > 1){
+                dataObj.partsCount += inputs[3].valueAsNumber;
+                dataObj.sum += ((inputs[4].valueAsNumber * 100) * inputs[3].valueAsNumber) / 100;
+                dataObj.content += inputs[1].value + '$'+ inputs[2].value + '$'+ inputs[3].valueAsNumber + '$' + inputs[4].valueAsNumber + '@';
+            };
+    }
+    dataObj.content = dataObj.content.slice(0, -1);
+    // let arr = dataObj.content.split('@');
+    // let littleArr = arr[0].split('$');
+     console.log(dataObj.content);
+    let responce = await fetch ('/arrival/new/', {
+        method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(dataObj),
+        });
+    let result = await responce.json();
+    if (responce.status == 200){
+        arrivalToWerehouse();
+       
+    }
+}
+/**строка партномер, описание, количество, цена */
+function addRowForWerehouse(i){
+    let tbody = document.getElementById('addToBody');
+    let row = document.createElement('tr');
+    row.id = "rowWerehouse" + i;
+    row.innerHTML = `<td><input type="button" id="addRowButton`+ i +`" onclick="addRowForWerehouse(${i+1})" value="+"></td><td><input type="text" id="inputPartNumber`+ i +`"></td><td><input type="text" id="inputDescription`+i+`"></td><td><input type="number" id="inputCount`+ i +`" min="1" value="1"></td><td><input type="number" id="inputPrice`+ i +`" min="0" value="0"></td>`;
+    tbody.append(row);
+    document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getInfoParts(this.value, "inputDescription" + i)});
+    if (i>0) {
+        document.getElementById('addRowButton' + (i-1)).value = "-";
+        document.getElementById('addRowButton' + (i-1)).setAttribute('onclick', 'javascript:cancelForm("rowWerehouse'+ (i-1) +'")');
+    };
+}
+/**таблица наличие на складе */
+function createTableOfWerehouse(type){
+let listHtml = `<table><col class="col-list1"><col class="col-list2"><col class="col-list3"><col class="col-list4"><thead><tr><th></th><th>Партномер</th><th>Описание</th><th>Количество</th></tr</thead><tbody id="werehouseTbody"></tbody></table>`;
+let arrivalHtml = `<table><col class="col-arrival1"><col class="col-arrival2"><col class="col-arrival3"><col class="col-arrival4"><col class="col-arrival5"><col class="col-arrival6"> <thead><tr><th>№</th><th>Дата</th><th>От кого</th><th>Общее кол-во</th><th>Общая сумма</th><th>контент</th></tr></thead><tbody id="werehouseTbody"></tbody></table>`;
+let writeOffHtml = `<table><col class="col-writeOff1"><col class="col-writeOff2"><col class="col-writeOff3"><col class="col-writeOff4"><col class="col-writeOff5"><col class="col-writeOff6"><col class="col-writeOff7"><col class="col-writeOff8"><thead><tr><th>№</th><th>Дата</th><th>Тип</th><th>Номер заявки</th><th>ФИО</th><th>Общее кол-во</th><th>Общая сумма</th><th>контент</th></tr></thead><tbody id="werehouseTbody"></tbody></table>`;
+let html = "";
+switch(type){
+    case 1:  html = listHtml; break;
+    case 2:  html = arrivalHtml; break;
+    case 3:  html = writeOffHtml; break;
+}
+let table = document.createElement('table');
+table.id = 'werehouseTableId';
+table.className = 'werehouseTable';
+table.innerHTML = html;
+document.body.append(table);
+ 
+}
+/**получение данных в таблицу склада */
+async function getDataToWerehouseTable(type){
+    let url = "";
+    let row = "";
+    switch(type){
+        case 1: url = '/availablity/'; break;
+        case 2: url = '/arrival/';  break;
+        case 3: url = '/writeoff/'; break;
+    }
+    let temp = "";
+    let tmp = "";
+    let table = document.getElementById("werehouseTbody");
+    let response = await fetch (url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    });
+    let result = await response.json();
+    /** приводим дату/время в нормальный вид */
+    if(type>1){
+        for(let i=0; i < result.length; i++) {
+            tmp = result[i].date.slice(8, 10) + '.' + result[i].date.slice(5, 7) + '.' + result[i].date.slice(0, 4) + ' ' + result[i].date.slice(11, 16);
+            result[i].date = tmp;
+        }
+    }
+    
+    /**заполняем таблицу */
+    for(let i=0; i < result.length; i++) {
+        switch(type){
+            case 1: row = "<tr id='" + result[i].partNumber + "' onClick='detailPartList(" + result[i].partNumber +")'><td></td><td>'" + result[i].partNumber + "<\/td><td>" + result[i].description + "<\/td><td>" + result[i].count + "<\/td><\/tr>"; break;
+            case 2: row = "<tr id='" + result[i].id + "' onClick='detailArrival(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].date + "<\/td><td>" + result[i].fromWho + "<\/td><td>" + result[i].partsCount + "<\/td><td>" + result[i].sum + "<\/td><td>" + result[i].content + "<\/td><\/tr>"; break;
+            case 3: row = "<tr id='" + result[i].id + "' onClick='detailWriteOff(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].date + "<\/td><td>" + result[i].type + "<\/td><td>" + result[i].where + "<\/td><td>" + result[i].partsCount + "<\/td><td>" + result[i].sum + "<\/td><td>" + result[i].content + "<\/td><\/tr>"; break;
+        }
+        temp += row;
+    }
+    table.innerHTML = temp;
+
+
+}
+/**детали по запчасти */
+function detailPartList(id){
+
+}
+/**детали пополнения склада */
+function detailArrival(id){
+
+}
+/**детали списания со склада */
+function detailWriteOff(id){
+
+}
+
 
 /**перетаскивание объекта за header */
 function dragElement(elmnt) {

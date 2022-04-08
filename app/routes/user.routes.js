@@ -122,4 +122,40 @@ module.exports = function(app) {
     controller.getAvr
   );
 
+  app.get(
+    "/availablity/",
+    [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
+    controller.getAvailablity
+  );
+
+  app.get(
+    "/arrival/",
+    [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
+    controller.getArrival
+  );
+
+  app.get(
+    "/writeoff/",
+    [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
+    controller.getWriteOff
+  );
+
+  app.post(
+    "/availablity/",
+    [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
+    controller.newAvailablity
+  );
+
+  app.post(
+    "/arrival/new/",
+    [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
+    controller.newArrival
+  );
+
+  app.post(
+    "/writeoff/new/",
+    [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
+    controller.newWriteOff
+  );
+
 };
