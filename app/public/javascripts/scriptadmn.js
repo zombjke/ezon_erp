@@ -791,7 +791,7 @@ function addRowForWerehouse(i){
 }
 /**таблица наличие на складе */
 function createTableOfWerehouse(type){
-let listHtml = `<table><col class="col-list1"><col class="col-list2"><col class="col-list3"><col class="col-list4"><thead><tr><th></th><th>Партномер</th><th>Описание</th><th>Количество</th></tr</thead><tbody id="werehouseTbody"></tbody></table>`;
+let listHtml = `<table><col class="col-list1"><col class="col-list2"><col class="col-list3"><col class="col-list4"><thead><tr><th></th><th>Партномер</th><th>Описание</th><th>Количество</th><th>Приходная цена</th></tr></thead><tbody id="werehouseTbody"></tbody></table>`;
 let arrivalHtml = `<table><col class="col-arrival1"><col class="col-arrival2"><col class="col-arrival3"><col class="col-arrival4"><col class="col-arrival5"><col class="col-arrival6"> <thead><tr><th>№</th><th>Дата</th><th>От кого</th><th>Общее кол-во</th><th>Общая сумма</th><th>контент</th></tr></thead><tbody id="werehouseTbody"></tbody></table>`;
 let writeOffHtml = `<table><col class="col-writeOff1"><col class="col-writeOff2"><col class="col-writeOff3"><col class="col-writeOff4"><col class="col-writeOff5"><col class="col-writeOff6"><col class="col-writeOff7"><col class="col-writeOff8"><thead><tr><th>№</th><th>Дата</th><th>Тип</th><th>Номер заявки</th><th>ФИО</th><th>Общее кол-во</th><th>Общая сумма</th><th>контент</th></tr></thead><tbody id="werehouseTbody"></tbody></table>`;
 let html = "";
@@ -807,6 +807,26 @@ table.innerHTML = html;
 document.body.append(table);
  
 }
+function hideColumnWerehouse(){
+    let ths = document.getElementById('werehouseTableId').querySelectorAll('th');
+    let trs = document.getElementById('werehouseTbody').querySelectorAll('tr');
+    if (ths.length == 8){
+        ths[7].style.display = "none";
+        for(let i=0;i<trs.length;i++){
+            let tds = trs[i].querySelectorAll('td');
+            tds[7].style.display = "none";
+        }
+    }
+    if (ths.length == 6){
+        ths[5].style.display = "none";
+        for(let i=0;i<trs.length;i++){
+            let tds = trs[i].querySelectorAll('td');
+            tds[5].style.display = "none";
+        }
+    }
+}
+
+
 /**получение данных в таблицу склада */
 async function getDataToWerehouseTable(type){
     let url = "";
@@ -837,14 +857,14 @@ async function getDataToWerehouseTable(type){
     /**заполняем таблицу */
     for(let i=0; i < result.length; i++) {
         switch(type){
-            case 1: row = "<tr id='" + result[i].partNumber + "' onClick='detailPartList(" + result[i].partNumber +")'><td></td><td>'" + result[i].partNumber + "<\/td><td>" + result[i].description + "<\/td><td>" + result[i].count + "<\/td><\/tr>"; break;
+            case 1: row = "<tr id='" + result[i].partNumber + "' onClick='detailPartList(" + result[i].partNumber +")'><td></td><td>" + result[i].partNumber + "<\/td><td>" + result[i].description + "<\/td><td>" + result[i].count + "<\/td><td>" + result[i].price + "<\/td><\/tr>"; break;
             case 2: row = "<tr id='" + result[i].id + "' onClick='detailArrival(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].date + "<\/td><td>" + result[i].fromWho + "<\/td><td>" + result[i].partsCount + "<\/td><td>" + result[i].sum + "<\/td><td>" + result[i].content + "<\/td><\/tr>"; break;
             case 3: row = "<tr id='" + result[i].id + "' onClick='detailWriteOff(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].date + "<\/td><td>" + result[i].type + "<\/td><td>" + result[i].where + "<\/td><td>" + result[i].partsCount + "<\/td><td>" + result[i].sum + "<\/td><td>" + result[i].content + "<\/td><\/tr>"; break;
         }
         temp += row;
     }
     table.innerHTML = temp;
-
+    hideColumnWerehouse();
 
 }
 /**детали по запчасти */

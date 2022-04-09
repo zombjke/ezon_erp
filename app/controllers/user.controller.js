@@ -319,13 +319,46 @@ exports.newAvailablity = (req, res) => {
 
 exports.newArrival = (req, res) => {
   if(!req.body) return res.sendStatus(400);
-  //console.log(req.body.content);
-  let arrs = req.body.content.split('@');
-  console.log(arrs);
-  pool.query('INSERT INTO arrival SET ?', req.body, (error, result) => {
+    pool.query('INSERT INTO arrival SET ?', req.body, (error, result) => {
     if (error) throw error;
-    res.status(200).send(result);
+  
+   let arrs = req.body.content.split('@');
+   for(let i=0;i<arrs.length;i++){
+     let contents = arrs[i].split('$');
+     let data = {
+       'count': contents[2],
+       'price': contents[3],
+       'partNumber': contents[0],
+       
+     }
+     let data1 = {
+      'partNumber': contents[0],
+      'description': contents[1],
+      'count': contents[2],
+      'price': contents[3],
+    }
+   //  console.log(contents[0]);
+    pool.query('SELECT partNumber FROM availablity WHERE partNumber = ?', contents[0], (error, result) => {
+      if (error) throw error;
+      if (result.length > 0){
+        pool.query('UPDATE availablity SET count = count + ?, price = ? WHERE partNumber = ?', Object.values(data), (error, result) => {
+          if (error) throw error;
+          
+        });
+      }
+      if (result.length == 0){
+        pool.query('INSERT INTO availablity SET ?', data1, (error, result) => {
+          if (error) throw error;
+          
+        });
+      }
+    });
+  }
+
+  res.status(200).send(result);
   });
+
+  
 }
 
 exports.newWriteOff = (req, res) => {
