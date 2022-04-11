@@ -50,25 +50,12 @@
 
 
 
-<table>
-    <col class="col-arrival1">
-    <col class="col-arrival2">
-    <col class="col-arrival3">
-    <col class="col-arrival4">
-    <col class="col-arrival5">
-    <thead>
-        <tr>
-            <td>№</td>
-            <td>Дата</td>
-            <td>От кого</td>
-            <td>Общее кол-во</td>
-            <td>Общая сумма</td>
-        </tr>
-    </thead>
-    <tbody id="listTbody"></tbody>
-</table>
-
-
+                <td><input type="button" id="writeOffRowButton'+ i +'" onclick="writeOffRowForWerehouse(i+1)" value="+"></td>
+                <td><input type="text" id="inputPartNumber"></td>
+                <td><input type="text" id="inputDescription"></td>
+                <td><input type="number" id="inputCount" min="1"></td>
+                <td><input type="number" id="inputPrice" min="1"></td>
+            
 
 
 </body>

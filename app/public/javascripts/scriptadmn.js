@@ -218,7 +218,7 @@ async function saveUserInfo(id){
 }
 /**обработчик кнопки Новый пользователь */   
 function newUser(){
-       let html = `<div id="newUserFormIdHeader" class="newUserFormHeader"></div><div class="userDetailInfo"><div class="column"><label for="username">Имя пользователя</label><br><label for="password">Пароль</label><br><label for="role">Должность</label><br><label for="office">Офис</label><br></div><div class="column"><input type="text" id="username" name="username"><input type="text" id="password" name="password"><select id="role" name="role"><option value="user">Инженер</option><option value="moderator">Менеджер</option><option value="admin">Администратор</option><option value="werehouse">Зав склад</option><input type="text" id="office" name="office"></div></div><div class="userDetailSubButtons"><input type="button" onclick="saveNewUser()" value="Сохранить" class="submitButton"><input type="button" onclick="cancelForm('newUserFormId')" value="Отменить" class="submitButton"></div>`;
+       let html = `<div id="newUserFormIdHeader" class="newUserFormHeader">Новый пользователь</div><div class="userDetailInfo"><div class="column"><label for="username">Имя пользователя</label><br><label for="password">Пароль</label><br><label for="role">Должность</label><br><label for="office">Офис</label><br></div><div class="column"><input type="text" id="username" name="username"><input type="text" id="password" name="password"><select id="role" name="role"><option value="user">Инженер</option><option value="moderator">Менеджер</option><option value="admin">Администратор</option><option value="werehouse">Зав склад</option><input type="text" id="office" name="office"></div></div><div class="userDetailSubButtons"><input type="button" onclick="saveNewUser()" value="Сохранить" class="submitButton"><input type="button" onclick="cancelForm('newUserFormId')" value="Отменить" class="submitButton"></div>`;
        let form = document.createElement('form');
        form.id = "newUserFormId";
        form.className = "userDetailForm";
@@ -263,7 +263,7 @@ async function saveNewUser(){
    /**форма подтверждение на удаление пользователя */
 function removeUser(id){
     if (!document.getElementById('delUserFormId')){
-        let html = `<div id="delUserFormIdHeader" class="newUserFormHeader"></div><div class="userDetailInfo"><p>Вы уверены?</p></div><div class="userDetailSubButtons"><input type="button" class="submitButton" onclick="deleteUser(${id})" value="ДА!"><input type="button" class="submitButton" onclick="cancelForm('delUserFormId')" value="Отменить"></div>`;
+        let html = `<div id="delUserFormIdHeader" class="newUserFormHeader">Удаление пользователя</div><div class="userDetailInfo"><p>Вы уверены?</p></div><div class="userDetailSubButtons"><input type="button" class="submitButton" onclick="deleteUser(${id})" value="ДА!"><input type="button" class="submitButton" onclick="cancelForm('delUserFormId')" value="Отменить"></div>`;
         let form = document.createElement('form');
         form.id = "delUserFormId";
         form.className = "userDetailForm";
@@ -729,18 +729,39 @@ function findPart(){
 }
 /** добавление на склад */
 function addTo(){
-    let form = document.createElement('form');
-    form.id = 'addToId';
-    form.className = 'addTo';
-    form.innerHTML = `<div id="addToIdHeader" class="addToHeader"></div><div id="addToContent" class="addToContent"><select id="fromWho"><option value="0">Покупка</option><option value="1">EPSON</option></select><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Количество</td><td>Цена</td></tr></thead><tbody id="addToBody"></tbody></table></div><div class="addToSubButtons"><input type="button" class="submitButton" onclick="saveAddTo()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('addToId')" value="Отмена"></div>`;
-    document.body.append(form);
-    addRowForWerehouse(0);
-    dragElement(document.getElementById("addToId"));
+    if (!document.getElementById('addToId')){
+        let form = document.createElement('form');
+        form.id = 'addToId';
+        form.className = 'addTo';
+        form.innerHTML = `<div id="addToIdHeader" class="addToHeader">ПОПОЛНЕНИЕ склада</div><div id="addToContent" class="addToContent"><select id="fromWho"><option value="0">Покупка</option><option value="1">EPSON</option></select><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Количество</td><td>Цена</td></tr></thead><tbody id="addToBody"></tbody></table></div><div class="addToSubButtons"><input type="button" class="submitButton" onclick="saveAddTo()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('addToId')" value="Отмена"></div>`;
+        document.body.append(form);
+        addRowForWerehouse(0);
+        dragElement(document.getElementById(form.id));
+    }
 }
 /**списание со склада */
 function writeOff(){
+    if (!document.getElementById('writeOffId')){
+        let form = document.createElement('form');
+        form.id = 'writeOffId';
+        form.className = 'writeOff';
+        form.innerHTML = `<div id="writeOffIdHeader" class="writeOffHeader">СПИСАНИЕ со склада</div><div id="writeOffContent" class="writeOffContent"><select id="type"><option value="0">Гарантийный ремонт</option><option value="1">Продажа</option><option value="2">Списание</option></select><input type="number" min="1" id="taskNumber" placeholder="№ заявки"><input type="text" id="where" placeholder="ФИО получателя"><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Наличие</td><td>Количество</td><td width="20px">Мин цена</td><td>Цена</td></tr></thead><tbody id="writeOffBody"></tbody></table></div><div class="writeOffSubButtons"><input type="button" class="submitButton" onclick="saveWriteOff()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('writeOffId')" value="Отмена"></div>`;
+        document.body.append(form);
+        writeOffRowForWerehouse(0);
+        dragElement(document.getElementById(form.id));
 
+        let selector = document.getElementById('type');
+        selector.addEventListener('change', (event) =>{
+            if (selector.value > 0){
+                document.getElementById('taskNumber').style.display = 'none';
+            }else{
+                document.getElementById('taskNumber').style.display = 'inline';
+            };
+        });
+
+    }
 }
+
 /**сохранение формы пополнения склада */
 async function saveAddTo(){
     let dataObj = {
@@ -760,9 +781,6 @@ async function saveAddTo(){
             };
     }
     dataObj.content = dataObj.content.slice(0, -1);
-    // let arr = dataObj.content.split('@');
-    // let littleArr = arr[0].split('$');
-     console.log(dataObj.content);
     let responce = await fetch ('/arrival/new/', {
         method: 'POST',
             headers: {
@@ -773,10 +791,23 @@ async function saveAddTo(){
     let result = await responce.json();
     if (responce.status == 200){
         arrivalToWerehouse();
-       
-    }
+      }
 }
-/**строка партномер, описание, количество, цена */
+/**строка для СПИСАНИЕ СО СКЛАДА */
+function writeOffRowForWerehouse(i){
+    let tbody = document.getElementById('writeOffBody');
+    let row = document.createElement('tr');
+    row.id = "rowWerehouse" + i;
+    row.innerHTML = `<td><input type="button" id="addRowButton`+ i +`" onclick="writeOffRowForWerehouse(${i+1})" value="+"></td><td><input type="text" id="inputPartNumber`+ i +`"></td><td><input type="text" id="inputDescription`+i+`" readonly></td><td><input type="number" id="available`+i+`" class="helpFields" readonly></td><td><input type="number" id="inputCount`+ i +`" min="1" value="1"></td><td><input type="number" id="minPrice`+i+`" class="helpFields" readonly></td><td><input type="number" id="inputPrice`+ i +`" min="0" value="0"></td>`;
+    tbody.append(row);
+    document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getInfoParts(this.value, "inputDescription" + i)});
+    if (i>0) {
+        document.getElementById('addRowButton' + (i-1)).value = "-";
+        document.getElementById('addRowButton' + (i-1)).setAttribute('onclick', 'javascript:cancelForm("rowWerehouse'+ (i-1) +'")');
+        document.getElementById('writeOffContent').scrollTop = document.getElementById('writeOffContent').scrollHeight;
+    };
+}
+/**строка партномер, описание, количество, цена ПОЛОЛНЕНИЕ СКЛАДА*/
 function addRowForWerehouse(i){
     let tbody = document.getElementById('addToBody');
     let row = document.createElement('tr');
@@ -787,6 +818,7 @@ function addRowForWerehouse(i){
     if (i>0) {
         document.getElementById('addRowButton' + (i-1)).value = "-";
         document.getElementById('addRowButton' + (i-1)).setAttribute('onclick', 'javascript:cancelForm("rowWerehouse'+ (i-1) +'")');
+        document.getElementById('addToContent').scrollTop = document.getElementById('addToContent').scrollHeight;
     };
 }
 /**таблица наличие на складе */
@@ -807,6 +839,7 @@ table.innerHTML = html;
 document.body.append(table);
  
 }
+/**прячем столб Content в werehouse*/
 function hideColumnWerehouse(){
     let ths = document.getElementById('werehouseTableId').querySelectorAll('th');
     let trs = document.getElementById('werehouseTbody').querySelectorAll('tr');
