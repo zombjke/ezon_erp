@@ -752,16 +752,15 @@ function writeOff(){
 
         let selector = document.getElementById('type');
         selector.addEventListener('change', (event) =>{
-            if (selector.value > 0){
-                document.getElementById('taskNumber').style.display = 'none';
-            }else{
-                document.getElementById('taskNumber').style.display = 'inline';
+            switch (selector.value) {
+                case '0': document.getElementById('taskNumber').style.display = 'inline'; document.getElementById('where').placeholder = "ФИО инженера"; break;
+                case '1': document.getElementById('taskNumber').style.display = 'none'; document.getElementById('where').placeholder = "ФИО получателя"; break;
+                case '2': document.getElementById('taskNumber').style.display = 'none'; document.getElementById('where').placeholder = "ФИО ответственного"; break;
             };
         });
 
     }
 }
-
 /**сохранение формы пополнения склада */
 async function saveAddTo(){
     let dataObj = {
@@ -792,6 +791,10 @@ async function saveAddTo(){
     if (responce.status == 200){
         arrivalToWerehouse();
       }
+}
+/**сохранение СПИСАНИЕ со склада */
+async function saveWriteOff(){
+
 }
 /**строка для СПИСАНИЕ СО СКЛАДА */
 function writeOffRowForWerehouse(i){
