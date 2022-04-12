@@ -68,9 +68,9 @@ CREATE TABLE IF NOT EXISTS `arrival` (
   `content` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.arrival: ~17 rows (приблизительно)
+-- Дамп данных таблицы tasks.arrival: ~18 rows (приблизительно)
 /*!40000 ALTER TABLE `arrival` DISABLE KEYS */;
 REPLACE INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`) VALUES
 	(1, '2022-04-07 21:13:27', '0', 5, 0.75, '1000455$DAMPER LEFT$5$0.15'),
@@ -89,7 +89,8 @@ REPLACE INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`)
 	(14, '2022-04-09 01:12:05', '0', 7, 35, '1000455$DAMPER LEFT$6$5@1001109$TRACTOR RIGHT [1010273]$1$5'),
 	(15, '2022-04-09 01:18:45', '0', 7, 35, '1000455$DAMPER LEFT$6$5@1001109$TRACTOR RIGHT [1010273]$1$5'),
 	(16, '2022-04-09 01:20:14', '0', 7, 17, '1000455$DAMPER LEFT$6$2@1001109$TRACTOR RIGHT [1010273]$1$5'),
-	(17, '2022-04-09 01:21:15', '0', 6, 27, '1000455$DAMPER LEFT$1$2@1000059$COMBINATION GEAR 244/17$5$5');
+	(17, '2022-04-09 01:21:15', '0', 6, 27, '1000455$DAMPER LEFT$1$2@1000059$COMBINATION GEAR 244/17$5$5'),
+	(18, '2022-04-10 02:29:40', '0', 4, 16.6, '1000455$DAMPER LEFT$4$4.15');
 /*!40000 ALTER TABLE `arrival` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.availablity
@@ -98,15 +99,16 @@ CREATE TABLE IF NOT EXISTS `availablity` (
   `description` text NOT NULL,
   `count` int NOT NULL,
   `price` float NOT NULL,
+  `sellprice` float NOT NULL,
   PRIMARY KEY (`partNumber`(10))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.availablity: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `availablity` DISABLE KEYS */;
-REPLACE INTO `availablity` (`partNumber`, `description`, `count`, `price`) VALUES
-	('1000059', 'COMBINATION GEAR 244/17', 5, 5),
-	('1000455', 'DAMPER LEFT', 11, 2),
-	('1001109', 'TRACTOR RIGHT [1010273]', 10, 5);
+REPLACE INTO `availablity` (`partNumber`, `description`, `count`, `price`, `sellprice`) VALUES
+	('1000059', 'COMBINATION GEAR 244/17', 5, 5, 7.151),
+	('1000455', 'DAMPER LEFT', 15, 4.15, 5.93533),
+	('1001109', 'TRACTOR RIGHT [1010273]', 10, 5, 7.151);
 /*!40000 ALTER TABLE `availablity` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.orders
@@ -138,6 +140,31 @@ REPLACE INTO `orders` (`id`, `createDate`, `purchaseDate`, `issueDate`, `status`
 	(11, '2022-03-24 12:02:16', '', '', 1, 13, 'ezon', '{"1000451": "1", "1002045": "1"}'),
 	(12, '2022-03-24 12:09:24', '', '', 1, 14, 'ezon', '{"1001846": "2"}');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+
+-- Дамп структуры для таблица tasks.price
+CREATE TABLE IF NOT EXISTS `price` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tamoj` float NOT NULL,
+  `demo` float NOT NULL,
+  `logistic` float NOT NULL,
+  `costs` float NOT NULL,
+  `other` float NOT NULL,
+  `profit` float NOT NULL,
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Дамп данных таблицы tasks.price: ~1 rows (приблизительно)
+/*!40000 ALTER TABLE `price` DISABLE KEYS */;
+REPLACE INTO `price` (`id`, `date`, `tamoj`, `demo`, `logistic`, `costs`, `other`, `profit`) VALUES
+	(1, '2022-04-13 01:54:19', 20, 5, 1, 1, 1, 1),
+	(2, '2022-04-13 02:05:59', 20, 5, 1, 1.02, 1, 1),
+	(3, '2022-04-13 02:06:14', 20, 5, 15, 1.02, 1, 1),
+	(4, '2022-04-13 02:20:10', 20, 5, 15, 1.02, 1, 1),
+	(5, '2022-04-13 02:25:22', 20, 5, 15, 1.02, 1, 1),
+	(6, '2022-04-13 02:29:54', 20, 5, 15, 1.02, 1, 1),
+	(7, '2022-04-13 02:31:13', 20, 5, 15, 1.02, 1, 1);
+/*!40000 ALTER TABLE `price` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.roles
 CREATE TABLE IF NOT EXISTS `roles` (
