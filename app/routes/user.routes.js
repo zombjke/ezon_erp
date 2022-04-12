@@ -61,6 +61,18 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.delUser
   );
+
+  app.post(
+    "/price/",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.savePrice
+  );
+
+  app.get(
+    "/price/",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.getPrice
+  );
   
   app.get(
     "/tasks",

@@ -172,7 +172,7 @@ width: 5%;
     width: 60%;
 }
 
-.userDetailForm {
+.userDetailForm, .priceForm {
     width: 400px;
     box-shadow: 0px 0px 15px -3px #000000;
     position: fixed;
@@ -181,6 +181,9 @@ width: 5%;
     z-index: 9;
     background-color: white;
       
+}
+.priceForm{
+    width: 300px;
 }
 
 #formNewPassId{
@@ -199,7 +202,7 @@ width: 5%;
 
 
 
-.userDetailHeader, .newUserFormHeader, .addNewTaskHeader, .addToHeader, .writeOffHeader, .detailTaskFormIdHeader, .checkTypeOfWorkHeader {
+.userDetailHeader, .newUserFormHeader, .priceHeader, .addNewTaskHeader, .addToHeader, .writeOffHeader, .detailTaskFormIdHeader, .checkTypeOfWorkHeader {
     height: 20px;
     background-color: #858282;
     cursor: move;
@@ -208,27 +211,41 @@ width: 5%;
     color: #ffffff;
 }
 
-.userDetailInfo{
+.userDetailInfo, .priceInfo{
     width: 100%;
     align-items:center;
     position: relative;
     display: flex;
-    
-    
- 
+
+}
+.priceInfo{
+    padding-top: 1%;
+    padding-left: 3%;
+}
+.priceInfo table {
+    width: 100%;
+}
+.priceInfo input {
+    width: 50px;
+}
+
+#summa{
+    text-align: center;
+    cursor: unset;
+    border: none;
+    color: #4a8870;
+    font-weight: bold;
 }
 .userDetailInfo p{
     margin-left: 40%;
-    
-    
- 
+
 }
 .column{
     flex: 40%;
     padding-left: 1%;
     padding-top: 2%;
 }
-.userDetailSubButtons, .addToSubButtons, .writeOffSubButtons, .detailTaskSubButtons, .newTaskSubButtons, .typeOfWorksubButtons {
+.userDetailSubButtons, .priceSubButtons, .addToSubButtons, .writeOffSubButtons, .detailTaskSubButtons, .newTaskSubButtons, .typeOfWorksubButtons {
     margin-top: 10px;
     margin-bottom: 10px;
     display: flex;
@@ -329,7 +346,10 @@ width: 5%;
 .helpFields{
     max-width: 50px;
     border: none;
+    cursor:unset;
+
 }
+
 
 #fromWho {
     margin-left: 1%;

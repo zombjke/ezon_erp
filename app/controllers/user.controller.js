@@ -365,3 +365,28 @@ exports.newWriteOff = (req, res) => {
   if(!req.body) return res.sendStatus(400);
 
 }
+
+exports.savePrice = (req, res) => {
+  if(!req.body) return res.sendStatus(400);
+  pool.query('INSERT INTO price SET ?', req.body, (error, result) => {
+    if (error) throw error;
+    let arr =  Object.values(req.body);
+    let percent = 0;
+    for (let i=0;i<arr.length;i++){
+      percent += parseFloat(arr[i]);
+    }
+     pool.query('UPDATE availablity SET sellprice = price + (price / 100 * ?)', percent , (error, result) => {
+       if (error) throw error;
+      res.status(200).send(result);
+    });
+  });
+}
+
+exports.getPrice = (req, res) => {
+  pool.query('SELECT * FROM price ORDER BY id DESC LIMIT 1', (error, result) => {
+    if (error) throw error;
+    //console.log(result);
+    res.status(200).send(result);
+  });
+  
+}

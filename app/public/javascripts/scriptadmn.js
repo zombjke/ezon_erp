@@ -51,11 +51,80 @@ function reportPage(){
 }
 /**страем все с документа и рисуем вверхние кнопки */
 function addTopButtons(){
-    let html = `<div class="topButtons"><button id="usersButton" class="button" onclick="usersPage()">Пользователи</button><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="werehButton" class="button" onclick="werehousePage()">Склад</button><button id="reportButton" class="button" onclick="reportPage()">Отчет</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`;
+    let html = `<div class="topButtons"><button id="usersButton" class="button" onclick="usersPage()">Пользователи</button><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="werehButton" class="button" onclick="werehousePage()">Склад</button><button id="reportButton" class="button" onclick="reportPage()">Отчет</button><button id="priceButton" class="button" onclick="priceForm()">Цена</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`;
     document.body.innerHTML = "";
     document.body.innerHTML = html;
 }
-/**создаем навигацию проскладу */
+/**форма формирования цены */
+function priceForm(){
+    if (!document.getElementById('priceId')){
+        let form = document.createElement('form');
+        form.id = "priceId";
+        form.className = "priceForm";
+        form.innerHTML = `<div id="priceIdHeader" class="priceHeader">Формирование цены</div><div class="priceInfo"><table><tbody id="priceTable"><tr><td>Таможня</td><td><input type="number" id="tamoj" min="0" step="0.01">%</td></tr><tr><td>Демозал</td><td><input type="number" id="demo" min="0" step="0.01">%</td></tr><tr><td>Логистика</td><td><input type="number" id="logistic" min="0" step="0.01">%</td></tr><tr><td>Затраты фирмы</td><td><input type="number" id="costs" min="0" step="0.01">%</td></tr><tr><td>Прочие расходы</td><td><input type="number" id="other" min="0" step="0.01">%</td></tr><tr><td>Прибыль фирмы</td><td><input type="number" id="profit" min="0" step="0.01">%</td></tr><tr><td>Совокупный процент</td><td><input type="number" id="summa" min="0" step="0.01" value="0" readonly>%</td></tr></tbody></table></div><div class="priceSubButtons"><input type="button" class="submitButton" onclick="savePrice()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('priceId')" value="Отмена"></div>`;
+        document.body.append(form);
+        dragElement(document.getElementById(form.id));
+        getPrice();
+        
+        document.getElementById('priceTable').addEventListener('change', function(event){if(event.target.id != 'summa') calculate();})
+    }
+}
+/**калькуляция суммы процентов */
+function calculate(){
+    let resField = document.getElementById('summa');
+    let form = document.getElementById('priceTable');
+    let temp = 0;
+    let inputs = form.querySelectorAll('input');
+    for (let i=0;i<inputs.length;i++){
+        if (inputs[i].id != 'summa'){
+            temp += inputs[i].valueAsNumber; 
+        }
+        resField.valueAsNumber = temp.toFixed(2);
+    }
+    
+}
+
+/**получаем составляющие цены */
+async function getPrice(){
+    let form = document.getElementById('priceId')
+    let response = await fetch ('/price/', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+      });
+    let result = await response.json();
+      form.elements.tamoj.value = result[0].tamoj;
+      form.elements.demo.value = result[0].demo;
+      form.elements.logistic.value = result[0].logistic;
+      form.elements.costs.value = result[0].costs;
+      form.elements.other.value = result[0].other;
+      form.elements.profit.value = result[0].profit;
+      calculate();
+
+}
+/**сохраняем составляющие цены */
+async function savePrice(){
+    let form = document.getElementById('priceId');
+    let data = {
+        'tamoj': `${form.elements.tamoj.value}`,
+        'demo': `${form.elements.demo.value}`,
+        'logistic': `${form.elements.logistic.value}`,
+        'costs': `${form.elements.costs.value}`,
+        'other': `${form.elements.other.value}`,
+        'profit': `${form.elements.profit.value}`,
+    }
+    let response = await fetch ('/price/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(data),
+    });
+    await response.json();
+    if (response.status == 200) { cancelForm(form.id) };
+}
+/**создаем навигацию по складу */
 function addSelfButtons(){
     let cords = document.getElementById('werehButton').getBoundingClientRect();
     let div = document.createElement('div');
@@ -809,6 +878,15 @@ function writeOffRowForWerehouse(i){
         document.getElementById('addRowButton' + (i-1)).setAttribute('onclick', 'javascript:cancelForm("rowWerehouse'+ (i-1) +'")');
         document.getElementById('writeOffContent').scrollTop = document.getElementById('writeOffContent').scrollHeight;
     };
+}
+/**проверка наличия на складе
+ * pnumber = партномер детали
+ * idDesc = id поля описание
+ * idCount = id поля наличие на складе
+ * idMinPrice = id поля минимальная цена
+ */
+async function getAvailable(pnumber, idDesc, idCount, idMinPrice){
+
 }
 /**строка партномер, описание, количество, цена ПОЛОЛНЕНИЕ СКЛАДА*/
 function addRowForWerehouse(i){
