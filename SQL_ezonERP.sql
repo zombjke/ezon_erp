@@ -39,12 +39,11 @@ CREATE TABLE IF NOT EXISTS `application` (
   `compliteDate` text NOT NULL,
   `countOfPrint` text NOT NULL,
   UNIQUE KEY `ez-` (`numb`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.application: ~14 rows (приблизительно)
-DELETE FROM `application`;
 /*!40000 ALTER TABLE `application` DISABLE KEYS */;
-INSERT INTO `application` (`numb`, `date`, `name`, `phone`, `adress`, `vendor`, `model`, `serial`, `def`, `owner`, `stat`, `comm`, `sum`, `warr`, `purchase`, `compliteDate`, `countOfPrint`) VALUES
+REPLACE INTO `application` (`numb`, `date`, `name`, `phone`, `adress`, `vendor`, `model`, `serial`, `def`, `owner`, `stat`, `comm`, `sum`, `warr`, `purchase`, `compliteDate`, `countOfPrint`) VALUES
 	(1, '2022-03-18 18:41:54', 'DIANA', '998973306098', '25 Yalangach st.', 'POLARIS', 'PHB0635', 'ASD', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'complite', '', '', 1, '2022-03-03', '2022-03-21', ''),
 	(2, '2022-03-19 00:58:31', 'тимур расулов', '+998935530650', '25 Yalangach st.', 'POLARIS', 'PHB0635', '4219ASD8113192', 'не включается', 'ezon', 'def', '', '', 0, '', '2022-03-24', ''),
 	(3, '2022-03-19 17:10:36', 'DIANA', 'asd', '25 Yalangach st.', 'POLARIS', 'PHB0635', 'HFHGF', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'def', '', '', 1, '2022-03-01', '', ''),
@@ -58,7 +57,10 @@ INSERT INTO `application` (`numb`, `date`, `name`, `phone`, `adress`, `vendor`, 
 	(11, '2022-03-23 00:28:06', 'DIANA', 'asd', '25 Yalangach st.', 'POLARIS', 'PHB0635', 'ASD', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'def', '', '', 1, '2022-03-02', '', ''),
 	(12, '2022-03-23 00:36:55', 'DIANA', '998973306098', '25 Yalangach st.', 'ASD', 'PHB0635', 'ASD', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'def', '', '', 1, '2022-03-03', '', ''),
 	(13, '2022-03-24 12:01:20', 'DIANA', '998973306098', '25 Yalangach st.', 'POLARIS', 'QWEQWE', 'ASD', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'def', '', '', 1, '2022-03-02', '', ''),
-	(14, '2022-03-24 12:07:59', 'DIANA', 'asd', '25 Yalangach st.', 'EPSON', 'PHB0635', 'ASD', 'не включается', 'ezon', 'def', '', '', 1, '2022-03-11', '', '');
+	(14, '2022-03-24 12:07:59', 'DIANA', 'asd', '25 Yalangach st.', 'EPSON', 'PHB0635', 'ASD', 'не включается', 'ezon', 'def', '', '', 1, '2022-03-11', '', ''),
+	(15, '2022-04-13 21:32:42', 'Какой то новый пользователь', '998973306098', '25 Yalangach st.', 'EPSON', 'L1500', '4219ASD8113192', 'не включается', 'ezon', 'def', '', '', 1, '2022-04-01', '', ''),
+	(16, '2022-04-13 21:35:31', 'DIANA', 'asd', '25 Yalangach st.', 'POLARIS', 'PHB0635', '4219ASD8113192', 'не включается', 'ezon', 'def', '', '250000', 0, '', '', ''),
+	(17, '2022-04-13 22:34:52', 'DIANA', 'asd', '25 Yalangach st.', 'POLARIS', 'PHB0635', 'ASD', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'waiting', '', '', 1, '2022-04-01', '', '');
 /*!40000 ALTER TABLE `application` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.arrival
@@ -72,12 +74,11 @@ CREATE TABLE IF NOT EXISTS `arrival` (
   `content` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.arrival: ~18 rows (приблизительно)
-DELETE FROM `arrival`;
 /*!40000 ALTER TABLE `arrival` DISABLE KEYS */;
-INSERT INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`) VALUES
+REPLACE INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`) VALUES
 	(1, '2022-04-07 21:13:27', '0', 5, 0.75, '1000455$DAMPER LEFT$5$0.15'),
 	(2, '2022-04-07 21:42:38', '0', 7, 1.95, '1000455$DAMPER LEFT$2$0.15@1001109$TRACTOR RIGHT [1010273]$5$0.33@'),
 	(3, '2022-04-07 21:46:16', '0', 6, 3.8, '1000455$DAMPER LEFT$1$0.5@1001109$TRACTOR RIGHT [1010273]$5$0.66@'),
@@ -95,7 +96,23 @@ INSERT INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`) 
 	(15, '2022-04-09 01:18:45', '0', 7, 35, '1000455$DAMPER LEFT$6$5@1001109$TRACTOR RIGHT [1010273]$1$5'),
 	(16, '2022-04-09 01:20:14', '0', 7, 17, '1000455$DAMPER LEFT$6$2@1001109$TRACTOR RIGHT [1010273]$1$5'),
 	(17, '2022-04-09 01:21:15', '0', 6, 27, '1000455$DAMPER LEFT$1$2@1000059$COMBINATION GEAR 244/17$5$5'),
-	(18, '2022-04-10 02:29:40', '0', 4, 16.6, '1000455$DAMPER LEFT$4$4.15');
+	(18, '2022-04-10 02:29:40', '0', 4, 16.6, '1000455$DAMPER LEFT$4$4.15'),
+	(19, '2022-04-13 12:06:23', '0', 2, 12, '1000455$DAMPER LEFT$2$6'),
+	(20, '2022-04-13 12:08:32', '0', 2, 6, '1000455$DAMPER LEFT$2$3'),
+	(21, '2022-04-13 12:10:06', '0', 1, 5, '1000455$DAMPER LEFT$1$5'),
+	(22, '2022-04-13 12:10:33', '0', 1, 2, '1001030$COVER HEAT SINK$1$2'),
+	(23, '2022-04-13 12:13:32', '0', 1, 2, '1001030$COVER HEAT SINK$1$2'),
+	(24, '2022-04-13 12:16:37', '0', 1, 2, '1001030$COVER HEAT SINK$1$2'),
+	(25, '2022-04-13 13:41:13', '0', 1, 4, '1000455$DAMPER LEFT$1$4'),
+	(26, '2022-04-13 13:41:38', '0', 1, 3, '1000455$DAMPER LEFT$1$3'),
+	(27, '2022-04-13 13:44:24', '0', 1, 2, '1000455$DAMPER LEFT$1$2'),
+	(28, '2022-04-13 13:45:57', '0', 1, 1, '1000455$DAMPER LEFT$1$1'),
+	(29, '2022-04-13 13:46:33', '0', 1, 1, '1001091$FLANGE NUT$1$1'),
+	(30, '2022-04-13 14:14:44', '0', 1, 2, '1000455$DAMPER L$1$2'),
+	(31, '2022-04-13 14:16:54', '0', 1, 1, '10000000$new parts$1$1'),
+	(32, '2022-04-13 16:45:13', '0', 1, 0.15, '1001109$TRACTOR RIGHT [1010273]$1$0.15'),
+	(33, '2022-04-13 20:07:53', '1', 4, 13.8, '1000455$DAMPER LEFT$4$3.45'),
+	(34, '2022-04-13 22:18:28', '0', 22, 87.15, '1000455$DAMPER LEFT$1$3.15@1000059$COMBINATION GEAR 244/17$21$4');
 /*!40000 ALTER TABLE `arrival` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.availablity
@@ -110,12 +127,13 @@ CREATE TABLE IF NOT EXISTS `availablity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.availablity: ~3 rows (приблизительно)
-DELETE FROM `availablity`;
 /*!40000 ALTER TABLE `availablity` DISABLE KEYS */;
-INSERT INTO `availablity` (`partNumber`, `description`, `count`, `price`, `sellprice`) VALUES
-	('1000059', 'COMBINATION GEAR 244/17', 5, 5, 7.151),
-	('1000455', 'DAMPER LEFT', 15, 4.15, 5.93533),
-	('1001109', 'TRACTOR RIGHT [1010273]', 10, 5, 7.151);
+REPLACE INTO `availablity` (`partNumber`, `description`, `count`, `price`, `sellprice`) VALUES
+	('10000000', 'new parts', 1, 1, 1.26),
+	('1000059', 'COMBINATION GEAR 244/17', 12, 4, 5.04),
+	('1000455', 'DAMPER LEFT', 7, 3.15, 3.969),
+	('1001091', 'FLANGE NUT', 1, 1, 1.26),
+	('1001109', 'TRACTOR RIGHT [1010273]', 11, 0.15, 0.189);
 /*!40000 ALTER TABLE `availablity` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.orders
@@ -130,12 +148,11 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `owner` text NOT NULL,
   `content` json NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.orders: ~8 rows (приблизительно)
-DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` (`id`, `createDate`, `purchaseDate`, `issueDate`, `status`, `taskId`, `owner`, `content`) VALUES
+REPLACE INTO `orders` (`id`, `createDate`, `purchaseDate`, `issueDate`, `status`, `taskId`, `owner`, `content`) VALUES
 	(1, '2022-03-20 21:44:44', '', '', 2, 5, 'ezon', '{"123123": "1", "asdasd": "2"}'),
 	(2, '2022-03-20 22:13:22', '', '', 1, 3, 'ezon', '{"123123": "2", "asdasd": "1"}'),
 	(3, '2022-03-20 23:37:01', '', '', 1, 6, 'ezon', '{"ajiasjdo": "1", "asdasdasd": "1"}'),
@@ -147,7 +164,9 @@ INSERT INTO `orders` (`id`, `createDate`, `purchaseDate`, `issueDate`, `status`,
 	(9, '2022-03-23 00:28:29', '', '', 1, 11, 'ezon', '{"123123": "1"}'),
 	(10, '2022-03-23 00:37:11', '', '', 1, 12, 'ezon', '{" ": "1", "123123": "1"}'),
 	(11, '2022-03-24 12:02:16', '', '', 1, 13, 'ezon', '{"1000451": "1", "1002045": "1"}'),
-	(12, '2022-03-24 12:09:24', '', '', 1, 14, 'ezon', '{"1001846": "2"}');
+	(12, '2022-03-24 12:09:24', '', '', 1, 14, 'ezon', '{"1001846": "2"}'),
+	(13, '2022-04-13 21:34:09', '', '', 1, 15, 'ezon', '{"1001109": "1"}'),
+	(14, '2022-04-13 22:36:05', '', '', 1, 17, 'ezon', '{"1000451": "2"}');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.price
@@ -161,20 +180,24 @@ CREATE TABLE IF NOT EXISTS `price` (
   `costs` float NOT NULL,
   `other` float NOT NULL,
   `profit` float NOT NULL,
+  `summa` float NOT NULL,
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.price: ~1 rows (приблизительно)
-DELETE FROM `price`;
+-- Дамп данных таблицы tasks.price: ~8 rows (приблизительно)
 /*!40000 ALTER TABLE `price` DISABLE KEYS */;
-INSERT INTO `price` (`id`, `date`, `tamoj`, `demo`, `logistic`, `costs`, `other`, `profit`) VALUES
-	(1, '2022-04-13 01:54:19', 20, 5, 1, 1, 1, 1),
-	(2, '2022-04-13 02:05:59', 20, 5, 1, 1.02, 1, 1),
-	(3, '2022-04-13 02:06:14', 20, 5, 15, 1.02, 1, 1),
-	(4, '2022-04-13 02:20:10', 20, 5, 15, 1.02, 1, 1),
-	(5, '2022-04-13 02:25:22', 20, 5, 15, 1.02, 1, 1),
-	(6, '2022-04-13 02:29:54', 20, 5, 15, 1.02, 1, 1),
-	(7, '2022-04-13 02:31:13', 20, 5, 15, 1.02, 1, 1);
+REPLACE INTO `price` (`id`, `date`, `tamoj`, `demo`, `logistic`, `costs`, `other`, `profit`, `summa`) VALUES
+	(1, '2022-04-13 01:54:19', 20, 5, 1, 1, 1, 1, 0),
+	(2, '2022-04-13 02:05:59', 20, 5, 1, 1.02, 1, 1, 0),
+	(3, '2022-04-13 02:06:14', 20, 5, 15, 1.02, 1, 1, 0),
+	(4, '2022-04-13 02:20:10', 20, 5, 15, 1.02, 1, 1, 0),
+	(5, '2022-04-13 02:25:22', 20, 5, 15, 1.02, 1, 1, 0),
+	(6, '2022-04-13 02:29:54', 20, 5, 15, 1.02, 1, 1, 0),
+	(7, '2022-04-13 02:31:13', 20, 5, 15, 1.02, 1, 1, 0),
+	(8, '2022-04-13 12:09:39', 14, 3, 5, 1, 1, 1, 0),
+	(9, '2022-04-13 13:37:59', 14, 3, 5, 1, 1, 1, 25),
+	(10, '2022-04-13 13:38:52', 14, 3, 5, 1, 1, 1, 25),
+	(11, '2022-04-13 13:52:20', 15, 3, 5, 1, 1, 1, 26);
 /*!40000 ALTER TABLE `price` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.roles
@@ -188,9 +211,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.roles: ~3 rows (приблизительно)
-DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
+REPLACE INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 	(1, 'user', '2022-03-09 07:16:01', '2022-03-09 07:16:01'),
 	(2, 'moderator', '2022-03-09 07:16:01', '2022-03-09 07:16:01'),
 	(3, 'admin', '2022-03-09 07:16:01', '2022-03-09 07:16:01'),
@@ -207,15 +229,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.users: ~3 rows (приблизительно)
-DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `username`, `office`, `password`, `createdAt`, `updatedAt`) VALUES
+REPLACE INTO `users` (`id`, `username`, `office`, `password`, `createdAt`, `updatedAt`) VALUES
 	(1, 'admin', 'ezon', '$2a$08$D9IWKd7fwXz8ZfML6TezxedSQ3JS625qs59EKNp5KmU31FhQCxiVu', '2022-03-09 10:51:08', '2022-03-09 10:51:08'),
-	(2, 'manager', 'ezon', '$2a$08$UjqsPhAt2SdhoZxmPa7XJOF4xJTpLhPkTmtf1WmIHmESXQJOLeUc2', '2022-03-14 21:42:16', '2022-03-14 21:42:16'),
-	(4, 'инженер', 'ezon', '$2a$08$6noI4hMIvS.TJcZhz2QjVuPtdF1nl34Xeg9g4L0XCYJLDZiNkZwIW', '2022-03-15 18:10:25', '2022-03-15 18:10:25');
+	(2, 'manager', 'ezon', '$2a$08$MDuCXi9ZFKlOpiOq.ToSAOujm5O4NUdBs2OJHtmru2I4YcvQ/hk9K', '2022-03-14 21:42:16', '2022-03-14 21:42:16'),
+	(4, 'инженер', 'ezon', '$2a$08$LF88hhJKJW4stmOUseygieudMD0kUpsqzN3Uv4QcX6yT7ROroHoVG', '2022-03-15 18:10:25', '2022-03-15 18:10:25'),
+	(10, 'wereh', 'ezon', '$2a$08$.yYeeerlxlZ8Blew6/9ImuXm1VL9ypPjZ15Iepp5QMftEq5BiPYv6', '2022-04-13 17:04:23', '2022-04-13 17:04:23');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.user_roles
@@ -232,12 +254,12 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.user_roles: ~3 rows (приблизительно)
-DELETE FROM `user_roles`;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
+REPLACE INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
 	('2022-03-15 18:10:25', '2022-03-15 18:10:25', 1, 4),
 	('2022-03-14 21:42:17', '2022-03-14 21:42:17', 2, 2),
-	('2022-03-09 10:51:08', '2022-03-09 10:51:08', 3, 1);
+	('2022-03-09 10:51:08', '2022-03-09 10:51:08', 3, 1),
+	('2022-04-13 17:04:23', '2022-04-13 17:04:23', 4, 10);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.werehouse
@@ -251,9 +273,8 @@ CREATE TABLE IF NOT EXISTS `werehouse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.werehouse: ~49 410 rows (приблизительно)
-DELETE FROM `werehouse`;
 /*!40000 ALTER TABLE `werehouse` DISABLE KEYS */;
-INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('0A01439', 'Replacement box for C13S050039', 0, '3,57'),
 	('1000059', 'COMBINATION GEAR 244/17', 0, '0,09'),
 	('1000451', 'LEVER G ADJUST', 0, '0,36'),
@@ -10254,7 +10275,7 @@ INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1497210', 'INKCARTLCT0825(NON EU)', 0, '2,62'),
 	('1497211', 'DISC-INK CART.,LM-T0826(non eu)', 0, '2,62'),
 	('1497274', 'DISC-HOUSING,UPPER;D [ 1460735 ]', 0, '1,78');
-INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1497276', 'HOUSING,UPPER;F[1485165]', 0, '1,85'),
 	('1497333', 'DISC-MOTOR DECOMP ASSY.,IEI', 0, '4,53'),
 	('1497335', 'DISC-INK WASTE,TRAY,ASSY.;IEI(1587251)', 0, '2,96'),
@@ -20255,7 +20276,7 @@ INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1645720', 'MAIN BOARD ASSY CE02;IEI', 0, '31,02'),
 	('1645729', 'HEXAGON LOCK SCREW,SFS-4S-B1W', 0, '0,48'),
 	('1645759', 'Bracelet (Strap) assembly', 0, '2,64');
-INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1645779', 'DUPLEX,UNIT,;H;IEI [1611103]', 0, '5,11'),
 	('1645812', 'SCREW,PLATE,CR,M3x8', 0, '0,01'),
 	('1645815', 'COVER,IH;B,ASSY,ASP[1598192]', 0, '4,42'),
@@ -30256,7 +30277,7 @@ INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1764737', 'COVER,FOOT-BK;H922', 0, '0,27'),
 	('1764738', 'FOOT,ADJUST-WH;H922', 0, '1,85'),
 	('1764739', 'FOOT,ADJUST-BK;H922', 0, '1,85');
-INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1764742', 'COVER,FOOT-WH;H919', 0, '0,21'),
 	('1764744', 'DUCT,SMP;H922', 0, '0,61'),
 	('1764745', 'SPRING,FASTEN,HINGE', 0, '0,12'),
@@ -40257,7 +40278,7 @@ INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('2130603', 'DISC-BOARD ASSY., MAIN(2142610)', 0, '11,72'),
 	('2130642', 'SENSOR,INK EJECT,E2K-C25ME2(2149159)', 0, '153,33'),
 	('2130664', 'DISC-POWER SUPPLY,1A568W(2148456)', 0, '13,05');
-INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('2130673', 'DISC-RD ASSY,MAIN[ 2120851](2136325)', 0, '162,31'),
 	('2130674', 'DISC-BOARD ASSY,MAIN [ 2120852](2136324)', 0, '199,39'),
 	('2130720', 'ADF FRAME ASSY', 0, '292,46'),
@@ -49489,10 +49510,9 @@ CREATE TABLE IF NOT EXISTS `works` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.works: ~11 rows (приблизительно)
-DELETE FROM `works`;
 /*!40000 ALTER TABLE `works` DISABLE KEYS */;
-INSERT INTO `works` (`partNumber`, `typeOfWork`, `selType`) VALUES
-	('1001109', 'работа 1 ', 0),
+REPLACE INTO `works` (`partNumber`, `typeOfWork`, `selType`) VALUES
+	('1001109', 'ремонт трактора )))', 0),
 	('1001740', 'работа 6 ', 1),
 	('1002804', 'работа 7', 0),
 	('1001222', 'работа 5', 0),
@@ -49501,7 +49521,7 @@ INSERT INTO `works` (`partNumber`, `typeOfWork`, `selType`) VALUES
 	('asdasd', '', 0),
 	('1000455', 'работа 33', 0),
 	('1001846', '', 0),
-	('1000451', '', 0),
+	('1000451', '123123', 0),
 	('1002045', '', 0);
 /*!40000 ALTER TABLE `works` ENABLE KEYS */;
 
@@ -49511,17 +49531,30 @@ CREATE TABLE IF NOT EXISTS `writeoff` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `type` int NOT NULL,
+  `taskNumber` int DEFAULT NULL,
   `where` text NOT NULL,
   `partsCount` int NOT NULL,
   `sum` float NOT NULL,
-  `content` json NOT NULL,
+  `content` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.writeoff: ~0 rows (приблизительно)
-DELETE FROM `writeoff`;
 /*!40000 ALTER TABLE `writeoff` DISABLE KEYS */;
+REPLACE INTO `writeoff` (`id`, `date`, `type`, `taskNumber`, `where`, `partsCount`, `sum`, `content`) VALUES
+	(1, '2022-04-13 19:38:58', 0, 1, '123', 1, 3, '1000455$DAMPER LEFT$1$3'),
+	(2, '2022-04-13 19:40:40', 1, NULL, '123', 1, 3, '1000455$DAMPER LEFT$1$3'),
+	(3, '2022-04-13 19:44:28', 0, 2, '123', 1, 3, '1000455$DAMPER LEFT$1$3'),
+	(4, '2022-04-13 19:44:49', 0, 1, '123', 1, 3, '1000455$DAMPER LEFT$1$3'),
+	(5, '2022-04-13 19:46:24', 0, 1, '123', 1, 3, '1000455$DAMPER LEFT$1$3@'),
+	(6, '2022-04-13 19:48:25', 0, 1, '123', 1, 3, '1000455$DAMPER LEFT$1$3@'),
+	(7, '2022-04-13 19:51:01', 0, 1, '123', 1, 3, '1000455$DAMPER LEFT$1$3@'),
+	(8, '2022-04-13 19:54:33', 0, 1, '123', 1, 3, '1000455$DAMPER LEFT$1$3'),
+	(9, '2022-04-13 19:57:43', 0, 1, '123', 2, 6, '1000455$DAMPER LEFT$2$3'),
+	(10, '2022-04-13 20:00:02', 1, NULL, '123', 8, 33.6, '1000455$DAMPER LEFT$5$2.52@1000059$COMBINATION GEAR 244/17$3$7'),
+	(11, '2022-04-13 20:01:36', 1, NULL, '123', 3, 13, '1000455$DAMPER LEFT$2$3@1000059$COMBINATION GEAR 244/17$1$7'),
+	(12, '2022-04-13 22:20:17', 0, 1, '123', 18, 83, '1000455$DAMPER LEFT$8$4@1000059$COMBINATION GEAR 244/17$10$5.1');
 /*!40000 ALTER TABLE `writeoff` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
