@@ -48,7 +48,7 @@ return `<!doctype html>
       <td width="90%"><strong>ООО &quot;EZON SERVICE PRINT&quot;</strong></td>
     </tr>
     <tr>
-      <td><strong>Адрес</strong>: Шайхонтаурский район, ул. Турккургон, д. 9</td>
+      <td><strong>Адрес</strong>: Юнусобадский р-н, ул. Богишамол, д. 28</td>
     </tr>
     <tr>
       <td><strong>р/с</strong> 2020 8000 3052 5393  8001 <strong>МФО</strong>: 00444</td>
@@ -57,7 +57,7 @@ return `<!doctype html>
       <td><strong>ИНН:</strong> 307551188          <strong>ОКЭД:</strong> 95110</td>
     </tr>
     <tr>
-      <td><strong>Телефон:</strong> (78) 122-2-122; (90) 808-32-26; (90) 990-18-17; (93) 553-06-50</td>
+      <td><strong>Телефон:</strong> (78) 122-2-122; (55) 502-17-22; (90) 808-32-26</td>
     </tr>
   </tbody>
 </table>

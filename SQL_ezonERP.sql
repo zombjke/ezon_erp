@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `application` (
   UNIQUE KEY `ez-` (`numb`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.application: ~14 rows (приблизительно)
+-- Дамп данных таблицы tasks.application: ~17 rows (приблизительно)
 /*!40000 ALTER TABLE `application` DISABLE KEYS */;
 REPLACE INTO `application` (`numb`, `date`, `name`, `phone`, `adress`, `vendor`, `model`, `serial`, `def`, `owner`, `stat`, `comm`, `sum`, `warr`, `purchase`, `compliteDate`, `countOfPrint`) VALUES
 	(1, '2022-03-18 18:41:54', 'DIANA', '998973306098', '25 Yalangach st.', 'POLARIS', 'PHB0635', 'ASD', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'complite', '', '', 1, '2022-03-03', '2022-03-21', ''),
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `arrival` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.arrival: ~18 rows (приблизительно)
+-- Дамп данных таблицы tasks.arrival: ~34 rows (приблизительно)
 /*!40000 ALTER TABLE `arrival` DISABLE KEYS */;
 REPLACE INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`) VALUES
 	(1, '2022-04-07 21:13:27', '0', 5, 0.75, '1000455$DAMPER LEFT$5$0.15'),
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `availablity` (
   PRIMARY KEY (`partNumber`(10))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.availablity: ~3 rows (приблизительно)
+-- Дамп данных таблицы tasks.availablity: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `availablity` DISABLE KEYS */;
 REPLACE INTO `availablity` (`partNumber`, `description`, `count`, `price`, `sellprice`) VALUES
 	('10000000', 'new parts', 1, 1, 1.26),
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.orders: ~8 rows (приблизительно)
+-- Дамп данных таблицы tasks.orders: ~14 rows (приблизительно)
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 REPLACE INTO `orders` (`id`, `createDate`, `purchaseDate`, `issueDate`, `status`, `taskId`, `owner`, `content`) VALUES
 	(1, '2022-03-20 21:44:44', '', '', 2, 5, 'ezon', '{"123123": "1", "asdasd": "2"}'),
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `price` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.price: ~8 rows (приблизительно)
+-- Дамп данных таблицы tasks.price: ~11 rows (приблизительно)
 /*!40000 ALTER TABLE `price` DISABLE KEYS */;
 REPLACE INTO `price` (`id`, `date`, `tamoj`, `demo`, `logistic`, `costs`, `other`, `profit`, `summa`) VALUES
 	(1, '2022-04-13 01:54:19', 20, 5, 1, 1, 1, 1, 0),
@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.roles: ~3 rows (приблизительно)
+-- Дамп данных таблицы tasks.roles: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 REPLACE INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 	(1, 'user', '2022-03-09 07:16:01', '2022-03-09 07:16:01'),
@@ -231,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.users: ~3 rows (приблизительно)
+-- Дамп данных таблицы tasks.users: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 REPLACE INTO `users` (`id`, `username`, `office`, `password`, `createdAt`, `updatedAt`) VALUES
 	(1, 'admin', 'ezon', '$2a$08$D9IWKd7fwXz8ZfML6TezxedSQ3JS625qs59EKNp5KmU31FhQCxiVu', '2022-03-09 10:51:08', '2022-03-09 10:51:08'),
@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
   CONSTRAINT `user_roles_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.user_roles: ~3 rows (приблизительно)
+-- Дамп данных таблицы tasks.user_roles: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
 REPLACE INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
 	('2022-03-15 18:10:25', '2022-03-15 18:10:25', 1, 4),
@@ -272,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `werehouse` (
   UNIQUE KEY `partNumber` (`partNumber`(10))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.werehouse: ~49 410 rows (приблизительно)
+-- Дамп данных таблицы tasks.werehouse: ~49 218 rows (приблизительно)
 /*!40000 ALTER TABLE `werehouse` DISABLE KEYS */;
 REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('0A01439', 'Replacement box for C13S050039', 0, '3,57'),
@@ -49540,7 +49540,7 @@ CREATE TABLE IF NOT EXISTS `writeoff` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы tasks.writeoff: ~0 rows (приблизительно)
+-- Дамп данных таблицы tasks.writeoff: ~12 rows (приблизительно)
 /*!40000 ALTER TABLE `writeoff` DISABLE KEYS */;
 REPLACE INTO `writeoff` (`id`, `date`, `type`, `taskNumber`, `where`, `partsCount`, `sum`, `content`) VALUES
 	(1, '2022-04-13 19:38:58', 0, 1, '123', 1, 3, '1000455$DAMPER LEFT$1$3'),
