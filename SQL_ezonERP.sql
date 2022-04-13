@@ -14,10 +14,12 @@
 
 
 -- Дамп структуры базы данных tasks
+DROP DATABASE IF EXISTS `tasks`;
 CREATE DATABASE IF NOT EXISTS `tasks` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `tasks`;
 
 -- Дамп структуры для таблица tasks.application
+DROP TABLE IF EXISTS `application`;
 CREATE TABLE IF NOT EXISTS `application` (
   `numb` int NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -40,8 +42,9 @@ CREATE TABLE IF NOT EXISTS `application` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.application: ~14 rows (приблизительно)
+DELETE FROM `application`;
 /*!40000 ALTER TABLE `application` DISABLE KEYS */;
-REPLACE INTO `application` (`numb`, `date`, `name`, `phone`, `adress`, `vendor`, `model`, `serial`, `def`, `owner`, `stat`, `comm`, `sum`, `warr`, `purchase`, `compliteDate`, `countOfPrint`) VALUES
+INSERT INTO `application` (`numb`, `date`, `name`, `phone`, `adress`, `vendor`, `model`, `serial`, `def`, `owner`, `stat`, `comm`, `sum`, `warr`, `purchase`, `compliteDate`, `countOfPrint`) VALUES
 	(1, '2022-03-18 18:41:54', 'DIANA', '998973306098', '25 Yalangach st.', 'POLARIS', 'PHB0635', 'ASD', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'complite', '', '', 1, '2022-03-03', '2022-03-21', ''),
 	(2, '2022-03-19 00:58:31', 'тимур расулов', '+998935530650', '25 Yalangach st.', 'POLARIS', 'PHB0635', '4219ASD8113192', 'не включается', 'ezon', 'def', '', '', 0, '', '2022-03-24', ''),
 	(3, '2022-03-19 17:10:36', 'DIANA', 'asd', '25 Yalangach st.', 'POLARIS', 'PHB0635', 'HFHGF', 'asdasda sdasd as dasd ada sdasd ad a sdasd asd asd ', 'ezon', 'def', '', '', 1, '2022-03-01', '', ''),
@@ -59,6 +62,7 @@ REPLACE INTO `application` (`numb`, `date`, `name`, `phone`, `adress`, `vendor`,
 /*!40000 ALTER TABLE `application` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.arrival
+DROP TABLE IF EXISTS `arrival`;
 CREATE TABLE IF NOT EXISTS `arrival` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -71,8 +75,9 @@ CREATE TABLE IF NOT EXISTS `arrival` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.arrival: ~18 rows (приблизительно)
+DELETE FROM `arrival`;
 /*!40000 ALTER TABLE `arrival` DISABLE KEYS */;
-REPLACE INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`) VALUES
+INSERT INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`) VALUES
 	(1, '2022-04-07 21:13:27', '0', 5, 0.75, '1000455$DAMPER LEFT$5$0.15'),
 	(2, '2022-04-07 21:42:38', '0', 7, 1.95, '1000455$DAMPER LEFT$2$0.15@1001109$TRACTOR RIGHT [1010273]$5$0.33@'),
 	(3, '2022-04-07 21:46:16', '0', 6, 3.8, '1000455$DAMPER LEFT$1$0.5@1001109$TRACTOR RIGHT [1010273]$5$0.66@'),
@@ -94,6 +99,7 @@ REPLACE INTO `arrival` (`id`, `date`, `fromWho`, `partsCount`, `sum`, `content`)
 /*!40000 ALTER TABLE `arrival` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.availablity
+DROP TABLE IF EXISTS `availablity`;
 CREATE TABLE IF NOT EXISTS `availablity` (
   `partNumber` tinytext NOT NULL,
   `description` text NOT NULL,
@@ -104,14 +110,16 @@ CREATE TABLE IF NOT EXISTS `availablity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.availablity: ~3 rows (приблизительно)
+DELETE FROM `availablity`;
 /*!40000 ALTER TABLE `availablity` DISABLE KEYS */;
-REPLACE INTO `availablity` (`partNumber`, `description`, `count`, `price`, `sellprice`) VALUES
+INSERT INTO `availablity` (`partNumber`, `description`, `count`, `price`, `sellprice`) VALUES
 	('1000059', 'COMBINATION GEAR 244/17', 5, 5, 7.151),
 	('1000455', 'DAMPER LEFT', 15, 4.15, 5.93533),
 	('1001109', 'TRACTOR RIGHT [1010273]', 10, 5, 7.151);
 /*!40000 ALTER TABLE `availablity` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.orders
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -125,8 +133,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.orders: ~8 rows (приблизительно)
+DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-REPLACE INTO `orders` (`id`, `createDate`, `purchaseDate`, `issueDate`, `status`, `taskId`, `owner`, `content`) VALUES
+INSERT INTO `orders` (`id`, `createDate`, `purchaseDate`, `issueDate`, `status`, `taskId`, `owner`, `content`) VALUES
 	(1, '2022-03-20 21:44:44', '', '', 2, 5, 'ezon', '{"123123": "1", "asdasd": "2"}'),
 	(2, '2022-03-20 22:13:22', '', '', 1, 3, 'ezon', '{"123123": "2", "asdasd": "1"}'),
 	(3, '2022-03-20 23:37:01', '', '', 1, 6, 'ezon', '{"ajiasjdo": "1", "asdasdasd": "1"}'),
@@ -142,6 +151,7 @@ REPLACE INTO `orders` (`id`, `createDate`, `purchaseDate`, `issueDate`, `status`
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.price
+DROP TABLE IF EXISTS `price`;
 CREATE TABLE IF NOT EXISTS `price` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -155,8 +165,9 @@ CREATE TABLE IF NOT EXISTS `price` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.price: ~1 rows (приблизительно)
+DELETE FROM `price`;
 /*!40000 ALTER TABLE `price` DISABLE KEYS */;
-REPLACE INTO `price` (`id`, `date`, `tamoj`, `demo`, `logistic`, `costs`, `other`, `profit`) VALUES
+INSERT INTO `price` (`id`, `date`, `tamoj`, `demo`, `logistic`, `costs`, `other`, `profit`) VALUES
 	(1, '2022-04-13 01:54:19', 20, 5, 1, 1, 1, 1),
 	(2, '2022-04-13 02:05:59', 20, 5, 1, 1.02, 1, 1),
 	(3, '2022-04-13 02:06:14', 20, 5, 15, 1.02, 1, 1),
@@ -167,6 +178,7 @@ REPLACE INTO `price` (`id`, `date`, `tamoj`, `demo`, `logistic`, `costs`, `other
 /*!40000 ALTER TABLE `price` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.roles
+DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -176,8 +188,9 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.roles: ~3 rows (приблизительно)
+DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-REPLACE INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 	(1, 'user', '2022-03-09 07:16:01', '2022-03-09 07:16:01'),
 	(2, 'moderator', '2022-03-09 07:16:01', '2022-03-09 07:16:01'),
 	(3, 'admin', '2022-03-09 07:16:01', '2022-03-09 07:16:01'),
@@ -185,6 +198,7 @@ REPLACE INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.users
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
@@ -196,14 +210,16 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.users: ~3 rows (приблизительно)
+DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-REPLACE INTO `users` (`id`, `username`, `office`, `password`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `users` (`id`, `username`, `office`, `password`, `createdAt`, `updatedAt`) VALUES
 	(1, 'admin', 'ezon', '$2a$08$D9IWKd7fwXz8ZfML6TezxedSQ3JS625qs59EKNp5KmU31FhQCxiVu', '2022-03-09 10:51:08', '2022-03-09 10:51:08'),
 	(2, 'manager', 'ezon', '$2a$08$UjqsPhAt2SdhoZxmPa7XJOF4xJTpLhPkTmtf1WmIHmESXQJOLeUc2', '2022-03-14 21:42:16', '2022-03-14 21:42:16'),
 	(4, 'инженер', 'ezon', '$2a$08$6noI4hMIvS.TJcZhz2QjVuPtdF1nl34Xeg9g4L0XCYJLDZiNkZwIW', '2022-03-15 18:10:25', '2022-03-15 18:10:25');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.user_roles
+DROP TABLE IF EXISTS `user_roles`;
 CREATE TABLE IF NOT EXISTS `user_roles` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
@@ -216,14 +232,16 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.user_roles: ~3 rows (приблизительно)
+DELETE FROM `user_roles`;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-REPLACE INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
+INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
 	('2022-03-15 18:10:25', '2022-03-15 18:10:25', 1, 4),
 	('2022-03-14 21:42:17', '2022-03-14 21:42:17', 2, 2),
 	('2022-03-09 10:51:08', '2022-03-09 10:51:08', 3, 1);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.werehouse
+DROP TABLE IF EXISTS `werehouse`;
 CREATE TABLE IF NOT EXISTS `werehouse` (
   `partNumber` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `description` text NOT NULL,
@@ -233,8 +251,9 @@ CREATE TABLE IF NOT EXISTS `werehouse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.werehouse: ~49 410 rows (приблизительно)
+DELETE FROM `werehouse`;
 /*!40000 ALTER TABLE `werehouse` DISABLE KEYS */;
-REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('0A01439', 'Replacement box for C13S050039', 0, '3,57'),
 	('1000059', 'COMBINATION GEAR 244/17', 0, '0,09'),
 	('1000451', 'LEVER G ADJUST', 0, '0,36'),
@@ -10235,7 +10254,7 @@ REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1497210', 'INKCARTLCT0825(NON EU)', 0, '2,62'),
 	('1497211', 'DISC-INK CART.,LM-T0826(non eu)', 0, '2,62'),
 	('1497274', 'DISC-HOUSING,UPPER;D [ 1460735 ]', 0, '1,78');
-REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1497276', 'HOUSING,UPPER;F[1485165]', 0, '1,85'),
 	('1497333', 'DISC-MOTOR DECOMP ASSY.,IEI', 0, '4,53'),
 	('1497335', 'DISC-INK WASTE,TRAY,ASSY.;IEI(1587251)', 0, '2,96'),
@@ -20236,7 +20255,7 @@ REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1645720', 'MAIN BOARD ASSY CE02;IEI', 0, '31,02'),
 	('1645729', 'HEXAGON LOCK SCREW,SFS-4S-B1W', 0, '0,48'),
 	('1645759', 'Bracelet (Strap) assembly', 0, '2,64');
-REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1645779', 'DUPLEX,UNIT,;H;IEI [1611103]', 0, '5,11'),
 	('1645812', 'SCREW,PLATE,CR,M3x8', 0, '0,01'),
 	('1645815', 'COVER,IH;B,ASSY,ASP[1598192]', 0, '4,42'),
@@ -30237,7 +30256,7 @@ REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1764737', 'COVER,FOOT-BK;H922', 0, '0,27'),
 	('1764738', 'FOOT,ADJUST-WH;H922', 0, '1,85'),
 	('1764739', 'FOOT,ADJUST-BK;H922', 0, '1,85');
-REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('1764742', 'COVER,FOOT-WH;H919', 0, '0,21'),
 	('1764744', 'DUCT,SMP;H922', 0, '0,61'),
 	('1764745', 'SPRING,FASTEN,HINGE', 0, '0,12'),
@@ -40238,7 +40257,7 @@ REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('2130603', 'DISC-BOARD ASSY., MAIN(2142610)', 0, '11,72'),
 	('2130642', 'SENSOR,INK EJECT,E2K-C25ME2(2149159)', 0, '153,33'),
 	('2130664', 'DISC-POWER SUPPLY,1A568W(2148456)', 0, '13,05');
-REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
+INSERT INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 	('2130673', 'DISC-RD ASSY,MAIN[ 2120851](2136325)', 0, '162,31'),
 	('2130674', 'DISC-BOARD ASSY,MAIN [ 2120852](2136324)', 0, '199,39'),
 	('2130720', 'ADF FRAME ASSY', 0, '292,46'),
@@ -49460,6 +49479,7 @@ REPLACE INTO `werehouse` (`partNumber`, `description`, `count`, `price`) VALUES
 /*!40000 ALTER TABLE `werehouse` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.works
+DROP TABLE IF EXISTS `works`;
 CREATE TABLE IF NOT EXISTS `works` (
   `partNumber` text NOT NULL,
   `typeOfWork` text NOT NULL,
@@ -49469,8 +49489,9 @@ CREATE TABLE IF NOT EXISTS `works` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.works: ~11 rows (приблизительно)
+DELETE FROM `works`;
 /*!40000 ALTER TABLE `works` DISABLE KEYS */;
-REPLACE INTO `works` (`partNumber`, `typeOfWork`, `selType`) VALUES
+INSERT INTO `works` (`partNumber`, `typeOfWork`, `selType`) VALUES
 	('1001109', 'работа 1 ', 0),
 	('1001740', 'работа 6 ', 1),
 	('1002804', 'работа 7', 0),
@@ -49485,6 +49506,7 @@ REPLACE INTO `works` (`partNumber`, `typeOfWork`, `selType`) VALUES
 /*!40000 ALTER TABLE `works` ENABLE KEYS */;
 
 -- Дамп структуры для таблица tasks.writeoff
+DROP TABLE IF EXISTS `writeoff`;
 CREATE TABLE IF NOT EXISTS `writeoff` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -49498,6 +49520,7 @@ CREATE TABLE IF NOT EXISTS `writeoff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы tasks.writeoff: ~0 rows (приблизительно)
+DELETE FROM `writeoff`;
 /*!40000 ALTER TABLE `writeoff` DISABLE KEYS */;
 /*!40000 ALTER TABLE `writeoff` ENABLE KEYS */;
 
