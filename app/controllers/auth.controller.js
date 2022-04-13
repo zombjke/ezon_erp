@@ -94,7 +94,9 @@ exports.signin = (req, res) => {
         }else if(authorities[0] === "ROLE_ADMIN"){
           res.status(200).send({redirect: '/adminpage', username: user.username, office: user.office});
           
-        }
+        }else if(authorities[0] === "ROLE_WEREHOUSE"){
+          res.status(200).send({redirect: '/werehpage', username: user.username, office: user.office});
+        };  
         
       });
     })

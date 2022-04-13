@@ -25,6 +25,11 @@ module.exports = function(app) {
     controller.moderatorBoard
   );
 
+  app.get(
+    "/werehpage",
+    [authJwt.verifyToken, authJwt.isWerehouse],
+    controller.werehouseBoard
+  );
 
   app.get(
     "/adminpage",
@@ -76,8 +81,13 @@ module.exports = function(app) {
   
   app.get(
     "/tasks",
-    [authJwt.verifyToken],
+    [authJwt.verifyToken, authJwt.isAdmin],
     controller.getTasks
+  );
+  app.get(
+    "/tasks/user/",
+    [authJwt.verifyToken],
+    controller.getTasksUser
   );
 
   app.put(

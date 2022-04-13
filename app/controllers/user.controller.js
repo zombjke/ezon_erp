@@ -14,7 +14,7 @@ exports.allAccess = (req, res) => {
 };
 
 exports.userBoard = (req, res) => {
-  res.render('tasks');
+  res.render('engpage');
 };
 
 exports.adminBoard = (req, res) => {
@@ -22,8 +22,12 @@ exports.adminBoard = (req, res) => {
 };
 
 exports.moderatorBoard = (req, res) => {
-  res.status(200).send("Moderator Content.");
+  res.render('mngrpage');
 };
+
+exports.werehouseBoard = (req, res) => {
+  res.render('werehpage');
+}
 
 exports.getAllUsers = (req, res) => {
   pool.query('SELECT id, username, office, roleid FROM users, user_roles WHERE users.id = user_roles.userId', (error, result) => {
@@ -80,6 +84,18 @@ exports.getTasks = (req, res) => {
  //   console.log(result);
     res.status(200).send(result);
   });
+}
+
+exports.getTasksUser = (req, res) => {
+    pool.query('SELECT office FROM users WHERE id = ?', req.userId, (error, result) => {
+    if (error) throw error;
+    let office = result[0].office;
+      pool.query('SELECT * FROM application WHERE stat != "closed" AND owner = ?', office, (error, result) => {
+        if (error) throw error;
+   //   console.log(result);
+       res.status(200).send(result);
+      });
+    });
 }
 
 exports.changeTask = (req, res) => {
