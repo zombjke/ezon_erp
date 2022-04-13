@@ -147,6 +147,12 @@ module.exports = function(app) {
   );
 
   app.get(
+    "/availablity/info/:id",
+    [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
+    controller.getInfoFromArrival
+  );
+
+  app.get(
     "/writeoff/",
     [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
     controller.getWriteOff

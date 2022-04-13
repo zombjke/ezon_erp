@@ -61,7 +61,7 @@ function priceForm(){
         let form = document.createElement('form');
         form.id = "priceId";
         form.className = "priceForm";
-        form.innerHTML = `<div id="priceIdHeader" class="priceHeader">Формирование цены</div><div class="priceInfo"><table><tbody id="priceTable"><tr><td>Таможня</td><td><input type="number" id="tamoj" min="0" step="0.01">%</td></tr><tr><td>Демозал</td><td><input type="number" id="demo" min="0" step="0.01">%</td></tr><tr><td>Логистика</td><td><input type="number" id="logistic" min="0" step="0.01">%</td></tr><tr><td>Затраты фирмы</td><td><input type="number" id="costs" min="0" step="0.01">%</td></tr><tr><td>Прочие расходы</td><td><input type="number" id="other" min="0" step="0.01">%</td></tr><tr><td>Прибыль фирмы</td><td><input type="number" id="profit" min="0" step="0.01">%</td></tr><tr><td>Совокупный процент</td><td><input type="number" id="summa" min="0" step="0.01" value="0" readonly>%</td></tr></tbody></table></div><div class="priceSubButtons"><input type="button" class="submitButton" onclick="savePrice()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('priceId')" value="Отмена"></div>`;
+        form.innerHTML = `<div id="priceIdHeader" class="priceHeader">Формирование цены</div><div class="priceInfo"><table><tbody id="priceTable"><tr><td>Таможня</td><td><input type="number" id="tamoj" min="0" step="0.01">%</td></tr><tr><td>Демозал</td><td><input type="number" id="demo" min="0" step="0.01">%</td></tr><tr><td>Логистика</td><td><input type="number" id="logistic" min="0" step="0.01">%</td></tr><tr><td>Затраты фирмы</td><td><input type="number" id="costs" min="0" step="0.01">%</td></tr><tr><td>Прочие расходы</td><td><input type="number" id="other" min="0" step="0.01">%</td></tr><tr><td>Прибыль фирмы</td><td><input type="number" id="profit" min="0" step="0.01">%</td></tr><tr><td>Совокупный процент</td><td><input type="text" id="summa" value="0" readonly><span>%</span></td></tr></tbody></table></div><div class="priceSubButtons"><input type="button" class="submitButton" onclick="savePrice()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('priceId')" value="Отмена"></div>`;
         document.body.append(form);
         dragElement(document.getElementById(form.id));
         getPrice();
@@ -79,7 +79,7 @@ function calculate(){
         if (inputs[i].id != 'summa'){
             temp += inputs[i].valueAsNumber; 
         }
-        resField.valueAsNumber = temp.toFixed(2);
+        resField.value = temp.toFixed(2);
     }
     
 }
@@ -100,7 +100,7 @@ async function getPrice(){
       form.elements.costs.value = result[0].costs;
       form.elements.other.value = result[0].other;
       form.elements.profit.value = result[0].profit;
-      calculate();
+      form.elements.summa.value = result[0].summa;
 
 }
 /**сохраняем составляющие цены */
@@ -113,6 +113,7 @@ async function savePrice(){
         'costs': `${form.elements.costs.value}`,
         'other': `${form.elements.other.value}`,
         'profit': `${form.elements.profit.value}`,
+        'summa': `${form.elements.summa.value}`,
     }
     let response = await fetch ('/price/', {
         method: 'POST',
@@ -602,7 +603,7 @@ async function getInfoParts(pnumber, id){
             }else{
                 document.getElementById(id).innerHTML = result[0].description;
             };
-            
+
         }else{
 
             document.getElementById(id).innerHTML = "Некорректный партномер!"
@@ -814,7 +815,7 @@ function writeOff(){
         let form = document.createElement('form');
         form.id = 'writeOffId';
         form.className = 'writeOff';
-        form.innerHTML = `<div id="writeOffIdHeader" class="writeOffHeader">СПИСАНИЕ со склада</div><div id="writeOffContent" class="writeOffContent"><select id="type"><option value="0">Гарантийный ремонт</option><option value="1">Продажа</option><option value="2">Списание</option></select><input type="number" min="1" id="taskNumber" placeholder="№ заявки"><input type="text" id="where" placeholder="ФИО получателя"><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Наличие</td><td>Количество</td><td width="20px">Мин цена</td><td>Цена</td></tr></thead><tbody id="writeOffBody"></tbody></table></div><div class="writeOffSubButtons"><input type="button" class="submitButton" onclick="saveWriteOff()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('writeOffId')" value="Отмена"></div>`;
+        form.innerHTML = `<div id="writeOffIdHeader" class="writeOffHeader">СПИСАНИЕ со склада</div><div id="writeOffContent" class="writeOffContent"><select id="type"><option value="0">Гарантийный ремонт</option><option value="1">Продажа</option><option value="2">Списание</option></select><input type="number" min="1" id="taskNumber" placeholder="№ заявки"><input type="text" id="where" placeholder="ФИО инженера"><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Наличие</td><td>Количество</td><td width="20px">Мин цена</td><td>Цена</td></tr></thead><tbody id="writeOffBody"></tbody></table></div><div class="writeOffSubButtons"><input type="button" class="submitButton" onclick="checkWriteOff()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('writeOffId')" value="Отмена"></div>`;
         document.body.append(form);
         writeOffRowForWerehouse(0);
         dragElement(document.getElementById(form.id));
@@ -823,8 +824,8 @@ function writeOff(){
         selector.addEventListener('change', (event) =>{
             switch (selector.value) {
                 case '0': document.getElementById('taskNumber').style.display = 'inline'; document.getElementById('where').placeholder = "ФИО инженера"; break;
-                case '1': document.getElementById('taskNumber').style.display = 'none'; document.getElementById('where').placeholder = "ФИО получателя"; break;
-                case '2': document.getElementById('taskNumber').style.display = 'none'; document.getElementById('where').placeholder = "ФИО ответственного"; break;
+                case '1': document.getElementById('taskNumber').style.display = 'none'; document.getElementById('taskNumber').value = ''; document.getElementById('where').placeholder = "ФИО получателя"; break;
+                case '2': document.getElementById('taskNumber').style.display = 'none'; document.getElementById('taskNumber').value = ''; document.getElementById('where').placeholder = "ФИО ответственного"; break;
             };
         });
 
@@ -861,18 +862,87 @@ async function saveAddTo(){
         arrivalToWerehouse();
       }
 }
-/**сохранение СПИСАНИЕ со склада */
-async function saveWriteOff(){
+/**проверка заполнености формы списания со склада */
+function checkWriteOff(){
+    let form = document.getElementById('writeOffId');
+    let selector = document.getElementById('type');
+    let objData = {
+        'type': `${selector.value}`,
+        'taskNumber': 0,
+        'where': '',
+        'partsCount': 0,
+        'sum': 0,
+        'content': '',
+    };
+    if (selector.value == 0){
+        if (form.elements.taskNumber.value.length > 0){
+            objData.taskNumber = form.elements.taskNumber.valueAsNumber;
+            form.elements.taskNumber.style.backgroundColor = "";
+        }else{            
+            form.elements.taskNumber.style.backgroundColor = "red";
+            return;
+        }
+    }else{
+        objData.taskNumber = null;
+    }
 
+    if(form.elements.where.value.length > 0){
+        objData.where = form.elements.where.value;
+        form.elements.where.style.backgroundColor = "";
+    }else{
+        form.elements.where.style.backgroundColor = "red";
+        return;
+    }
+
+    let trs = document.getElementById('writeOffBody').querySelectorAll('tr');
+    for(let i=0;i<trs.length;i++){
+        let inputs = trs[i].querySelectorAll('input');
+        
+            if (inputs[1].value.trim().length > 1){
+                if (parseFloat(inputs[4].value) <= parseFloat(inputs[3].value) && parseFloat(inputs[6].value) >= parseFloat(inputs[5].value)){
+                objData.content += inputs[1].value + '$'+ inputs[2].value + '$'+ inputs[4].valueAsNumber + '$' + parseFloat(inputs[6].value) + '@';
+                objData.partsCount += inputs[4].valueAsNumber;
+                objData.sum += ((inputs[6].valueAsNumber * 100) * inputs[4].valueAsNumber) / 100;
+                } else {
+                    if(parseFloat(inputs[4].value) > parseFloat(inputs[3].value)) {
+                    inputs[4].style.backgroundColor = "red";
+                    }
+                    if(parseFloat(inputs[6].value) < parseFloat(inputs[5].value)) {
+                    inputs[6].style.backgroundColor = "red";
+                    }
+                return;
+                }   
+            } 
+    }
+    objData.content = objData.content.slice(0, -1);
+    saveWriteOff(objData);
+
+}
+
+/**сохранение СПИСАНИЕ со склада */
+async function saveWriteOff(objData){
+    let responce = await fetch ('/writeoff/new/', {
+        method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(objData),
+        });
+    await responce.json();
+    if (responce.status == 200){
+        writeOffFromWerehouse();
+      }
 }
 /**строка для СПИСАНИЕ СО СКЛАДА */
 function writeOffRowForWerehouse(i){
     let tbody = document.getElementById('writeOffBody');
     let row = document.createElement('tr');
     row.id = "rowWerehouse" + i;
-    row.innerHTML = `<td><input type="button" id="addRowButton`+ i +`" onclick="writeOffRowForWerehouse(${i+1})" value="+"></td><td><input type="text" id="inputPartNumber`+ i +`"></td><td><input type="text" id="inputDescription`+i+`" readonly></td><td><input type="number" id="available`+i+`" class="helpFields" readonly></td><td><input type="number" id="inputCount`+ i +`" min="1" value="1"></td><td><input type="number" id="minPrice`+i+`" class="helpFields" readonly></td><td><input type="number" id="inputPrice`+ i +`" min="0" value="0"></td>`;
+    row.innerHTML = `<td><input type="button" id="addRowButton`+ i +`" onclick="writeOffRowForWerehouse(${i+1})" value="+"></td><td><input type="text" id="inputPartNumber`+ i +`"></td><td><input type="text" id="inputDescription`+i+`" readonly></td><td><input type="text" id="available`+i+`" class="helpFields" readonly></td><td><input type="number" id="inputCount`+ i +`" min="1" value="1"></td><td><input type="text" id="minPrice`+i+`" class="helpFields" readonly></td><td><input type="number" id="inputPrice`+ i +`" min="0" value="0" step="0.01"></td>`;
     tbody.append(row);
-    document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getInfoParts(this.value, "inputDescription" + i)});
+    document.getElementById('inputCount' + i).addEventListener('change', function() {if (parseFloat(document.getElementById('available' + i).value) < parseFloat(this.value)) {this.style.backgroundColor = "red"; this.style.color = "white";}else{this.style.backgroundColor = ""; this.style.color = ""}});
+    document.getElementById('inputPrice' + i).addEventListener('change', function() {if (parseFloat(document.getElementById('minPrice' + i).value) > parseFloat(this.value)) {this.style.backgroundColor = "red"; this.style.color = "white";}else{this.style.backgroundColor = ""; this.style.color = ""}});
+    document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getAvailable(this.value, "inputDescription" + i, "available" + i, "minPrice" + i)});
     if (i>0) {
         document.getElementById('addRowButton' + (i-1)).value = "-";
         document.getElementById('addRowButton' + (i-1)).setAttribute('onclick', 'javascript:cancelForm("rowWerehouse'+ (i-1) +'")');
@@ -886,6 +956,25 @@ function writeOffRowForWerehouse(i){
  * idMinPrice = id поля минимальная цена
  */
 async function getAvailable(pnumber, idDesc, idCount, idMinPrice){
+    pnumber = String(pnumber).trim();
+    if(pnumber.length>0){
+        let response = await fetch ('/availablity/info/' + pnumber, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+                },
+            });
+        let result = await response.json();
+        if (result.length > 0){
+                document.getElementById(idDesc).value = result[0].description;
+                document.getElementById(idCount).value = result[0].count;
+                document.getElementById(idMinPrice).value = result[0].sellprice;
+        }else{
+                document.getElementById(idDesc).value = "НЕТ В НАЛИЧИИ";
+                document.getElementById(idCount).value = "";
+                document.getElementById(idMinPrice).value = "";
+        }
+    }    
 
 }
 /**строка партномер, описание, количество, цена ПОЛОЛНЕНИЕ СКЛАДА*/
@@ -972,14 +1061,31 @@ async function getDataToWerehouseTable(type){
     for(let i=0; i < result.length; i++) {
         switch(type){
             case 1: row = "<tr id='" + result[i].partNumber + "' onClick='detailPartList(" + result[i].partNumber +")'><td></td><td>" + result[i].partNumber + "<\/td><td>" + result[i].description + "<\/td><td>" + result[i].count + "<\/td><td>" + result[i].price + "<\/td><\/tr>"; break;
-            case 2: row = "<tr id='" + result[i].id + "' onClick='detailArrival(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].date + "<\/td><td>" + result[i].fromWho + "<\/td><td>" + result[i].partsCount + "<\/td><td>" + result[i].sum + "<\/td><td>" + result[i].content + "<\/td><\/tr>"; break;
-            case 3: row = "<tr id='" + result[i].id + "' onClick='detailWriteOff(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].date + "<\/td><td>" + result[i].type + "<\/td><td>" + result[i].where + "<\/td><td>" + result[i].partsCount + "<\/td><td>" + result[i].sum + "<\/td><td>" + result[i].content + "<\/td><\/tr>"; break;
+            case 2: row = "<tr id='" + result[i].id + "' onClick='detailArrival(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].date + "<\/td><td>" + setFromWho(result[i].fromWho) + "<\/td><td>" + result[i].partsCount + "<\/td><td>" + result[i].sum + "<\/td><td>" + result[i].content + "<\/td><\/tr>"; break;
+            case 3: row = "<tr id='" + result[i].id + "' onClick='detailWriteOff(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].date + "<\/td><td>" + setTypeWriteOff(result[i].type) + "<\/td><td>" + checkTaskNumber(result[i].taskNumber) + "<\/td><td>" + result[i].where + "<\/td><td>" + result[i].partsCount + "<\/td><td>" + result[i].sum + "<\/td><td>" + result[i].content + "<\/td><\/tr>"; break;
         }
         temp += row;
     }
     table.innerHTML = temp;
     hideColumnWerehouse();
 
+}
+/**селектор для поплнения склада */
+function setFromWho(fromWho){
+    if (fromWho == 0) return "Покупка";
+    if (fromWho == 1) return "EPSON"
+}
+/**селектор для списания со склада */
+function setTypeWriteOff(type){
+    switch (type){
+        case 0: return "Гарантийный ремонт";
+        case 1: return "Продажа";
+        case 2: return "Списание";
+    }
+}
+/**убираем null из номера заявок */
+function checkTaskNumber(taskNumber){
+    if(taskNumber >= 1) {return taskNumber;} else {return ""}
 }
 /**детали по запчасти */
 function detailPartList(id){

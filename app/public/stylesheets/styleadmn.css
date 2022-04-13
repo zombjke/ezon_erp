@@ -230,9 +230,15 @@ width: 5%;
 }
 
 #summa{
+    margin-left: 6px;
+    width: 33px;
     text-align: center;
     cursor: unset;
     border: none;
+    color: #4a8870;
+    font-weight: bold;
+}
+.priceInfo span{
     color: #4a8870;
     font-weight: bold;
 }
@@ -344,6 +350,9 @@ width: 5%;
     width: 100%;
 }
 .helpFields{
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
     max-width: 50px;
     border: none;
     cursor:unset;

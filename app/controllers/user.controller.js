@@ -174,9 +174,17 @@ exports.getDataPartFromTask = (req, res) => {
 
 exports.getInfoParts = (req, res) => {
  // console.log(req.params.id);
-    pool.query('SELECT description FROM werehouse WHERE partNumber = ?', req.params.id, (error, result) => {
+    pool.query('SELECT description FROM availablity WHERE partNumber = ?', req.params.id, (error, result) => {
       if (error) throw error;
-      res.status(200).send(result);
+      if (result.length > 0){
+        res.status(200).send(result);
+      }else{
+        pool.query('SELECT description FROM werehouse WHERE partNumber = ?', req.params.id, (error, result) => {
+          if (error) throw error;
+          res.status(200).send(result);
+        });
+      }
+      
     });
 }
 
@@ -321,35 +329,38 @@ exports.newArrival = (req, res) => {
   if(!req.body) return res.sendStatus(400);
     pool.query('INSERT INTO arrival SET ?', req.body, (error, result) => {
     if (error) throw error;
-  
+
+    pool.query('SELECT summa FROM price ORDER BY id DESC LIMIT 1', (error, result) => {
+      if (error) throw error;
+      let percent = result[0].summa;
+    
    let arrs = req.body.content.split('@');
    for(let i=0;i<arrs.length;i++){
      let contents = arrs[i].split('$');
      let data = {
        'count': contents[2],
        'price': contents[3],
+       'sellprice': percent,
        'partNumber': contents[0],
-       
      }
      let data1 = {
       'partNumber': contents[0],
       'description': contents[1],
       'count': contents[2],
       'price': contents[3],
-    }
+      'sellprice': percent,
+     }
    //  console.log(contents[0]);
     pool.query('SELECT partNumber FROM availablity WHERE partNumber = ?', contents[0], (error, result) => {
       if (error) throw error;
       if (result.length > 0){
-        pool.query('UPDATE availablity SET count = count + ?, price = ? WHERE partNumber = ?', Object.values(data), (error, result) => {
+        pool.query('UPDATE availablity SET count = count + ?, price = ?, sellprice = price + (price / 100 * ?) WHERE partNumber = ?', Object.values(data), (error, result) => {
           if (error) throw error;
-          
         });
       }
       if (result.length == 0){
-        pool.query('INSERT INTO availablity SET ?', data1, (error, result) => {
+        pool.query('INSERT INTO availablity SET partNumber = ?, description = ?, count = ?, price = ?, sellprice = price + (price / 100 * ?)', Object.values(data1), (error, result) => {
           if (error) throw error;
-          
         });
       }
     });
@@ -357,25 +368,32 @@ exports.newArrival = (req, res) => {
 
   res.status(200).send(result);
   });
-
+});
   
 }
 
 exports.newWriteOff = (req, res) => {
   if(!req.body) return res.sendStatus(400);
-
+  pool.query('INSERT INTO writeOff SET ?', req.body, (error, result) => {
+    if (error) throw error;
+    let arrs = req.body.content.split('@');
+    for(let i=0;i<arrs.length;i++){
+      let contents = arrs[i].split('$');
+      let data = [contents[2], contents[0]];
+           pool.query('UPDATE availablity SET count = count - ? WHERE partNumber = ?', data, (error, result) => {
+           if (error) throw error;
+           });
+    }
+    res.status(200).send(result);
+  });
 }
 
 exports.savePrice = (req, res) => {
   if(!req.body) return res.sendStatus(400);
   pool.query('INSERT INTO price SET ?', req.body, (error, result) => {
     if (error) throw error;
-    let arr =  Object.values(req.body);
-    let percent = 0;
-    for (let i=0;i<arr.length;i++){
-      percent += parseFloat(arr[i]);
-    }
-     pool.query('UPDATE availablity SET sellprice = price + (price / 100 * ?)', percent , (error, result) => {
+    
+     pool.query('UPDATE availablity SET sellprice = price + (price / 100 * ?)', req.body.summa, (error, result) => {
        if (error) throw error;
       res.status(200).send(result);
     });
@@ -389,4 +407,11 @@ exports.getPrice = (req, res) => {
     res.status(200).send(result);
   });
   
+}
+
+exports.getInfoFromArrival = (req, res) => {
+  pool.query('SELECT * FROM availablity WHERE partNumber = ?', req.params.id, (error, result) => {
+    if (error) throw error;
+    res.status(200).send(result);
+  });
 }
