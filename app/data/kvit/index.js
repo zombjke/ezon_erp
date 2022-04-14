@@ -48,7 +48,7 @@ return `<!doctype html>
       <td width="90%"><strong>ООО &quot;EZON SERVICE PRINT&quot;</strong></td>
     </tr>
     <tr>
-      <td><strong>Адрес</strong>: Юнусобадский р-н, ул. Богишамол, д. 28</td>
+      <td><strong>Адрес</strong>: Юнусобадский р-н, ул. Гуллола, д. 28</td>
     </tr>
     <tr>
       <td><strong>р/с</strong> 2020 8000 3052 5393  8001 <strong>МФО</strong>: 00444</td>
@@ -119,7 +119,7 @@ return `<!doctype html>
       <td width="90%"><strong>ООО &quot;EZON SERVICE PRINT&quot;</strong></td>
     </tr>
     <tr>
-      <td><strong>Адрес</strong>: Шайхонтаурский район, ул. Турккургон, д. 9 </td>
+      <td><strong>Адрес</strong>: Юнусобадский р-н, ул. Гуллола, д. 28 </td>
     </tr>
     <tr>
       <td><strong>р/с</strong> 2020 8000 3052 5393  8001 <strong>МФО</strong>: 00444</td>
