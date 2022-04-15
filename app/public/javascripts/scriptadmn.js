@@ -1,5 +1,4 @@
 
-
 window.onbeforeunload = function() {
     document.cookie = `x-access-token=${getCookie('x-access-token')}; max-age=-1;`;
   };
@@ -361,7 +360,7 @@ function cancelForm(id){
 /**форма новой заявки */
 function newTask(){
     if (!document.getElementById('newTaskId')){
-        let html = `<div id="addNewTaskIdHeader" class="addNewTaskHeader"><a>Новая заявка</a></div><table class="addNewTask"><tbody><tr><td><a>ФИО</a></td><td><input type="text" id="name"></td></tr><tr><td><a>Телефон</a></td><td><input type="text" id="phone"></td></tr><tr><td><a>Адрес</a></td><td><input type="text" id="adress"></td></tr><tr><td colspan="2"><hr></td></tr><tr><td><a>Производитель</a></td><td><input type="text" id="vendor"></td></tr><tr><td><a>Модель</a></td><td><input type="text" id="model"></td></tr><tr><td><a>Серийный номер</a></td><td><input type="text" id="serial"></td></tr><tr><td><a>Дефект</a></td><td><input type="text" id="def"></td></tr><tr id="warrRowId"><td><a>Гарантия?</a></td><td><input type="checkbox" id="warranty" onclick="addPurchase()"></td></tr><tr><td><a>Нужна квитанция?</a></td><td><input type="checkbox" id="print" checked></td></tr></tbody></table><div class="newTaskSubButtons"><input type="button" class="submitButton" value="Cоздать" onclick="checkNewTask()"><input type="button" class="submitButton" value="Отмена" onclick="cancelForm('newTaskId')"></div>`;
+        let html = `<div id="newTaskIdHeader" class="addNewTaskHeader"><a>Новая заявка</a></div><table class="addNewTask"><tbody><tr><td><a>ФИО</a></td><td><input type="text" id="name"></td></tr><tr><td><a>Телефон</a></td><td><input type="text" id="phone"></td></tr><tr><td><a>Адрес</a></td><td><input type="text" id="adress"></td></tr><tr><td colspan="2"><hr></td></tr><tr><td><a>Производитель</a></td><td><input type="text" id="vendor"></td></tr><tr><td><a>Модель</a></td><td><input type="text" id="model"></td></tr><tr><td><a>Серийный номер</a></td><td><input type="text" id="serial"></td></tr><tr><td><a>Дефект</a></td><td><input type="text" id="def"></td></tr><tr id="warrRowId"><td><a>Гарантия?</a></td><td><input type="checkbox" id="warranty" onclick="addPurchase()"></td></tr><tr><td><a>Нужна квитанция?</a></td><td><input type="checkbox" id="print" checked></td></tr></tbody></table><div class="newTaskSubButtons"><input type="button" class="submitButton" value="Cоздать" onclick="checkNewTask()"><input type="button" class="submitButton" value="Отмена" onclick="cancelForm('newTaskId')"></div>`;
         let form = document.createElement('form');
         form.id = "newTaskId";
         form.className = "newTaskForm";
@@ -514,15 +513,16 @@ function selectStatus(val){
         case "waiting": return "Ожидание запчастей";
         case "needcall": return "Согласовать с клиентом";
         case "act": return "АКТ дефектации";
-        case "closed": return "Техника у клиента";
+        case "needWork": return "У клиента до прихода запчасти";
+        case "closed": return "Техника выдана клиенту";
     }
 }
 /**получаем информацию о заявке */
 function detailTask(id, warr){
     if(!document.getElementById('detailTaskFormId')){
         let tr = document.getElementById(id);
-        let htmlForPay = `<div id="detailTaskFormIdHeader" class="detailTaskFormIdHeader"><a>№${tr.cells[0].innerHTML} от ${tr.cells[1].innerHTML}</a></div><div class="detailTaskInfo"  id="detailTaskTbody"> <div class="printMenuButton"><img src="/images/printer.png" onclick="printMenu(${id})"><div class="printOptions" id ="printOptions" style="display: none;"><div onclick="getKvit(${id})"><a>Квитанция</a></div></div></div><table> <tbody> <tr> <td width="33%"><a>${tr.cells[5].innerHTML}</a></td> <td width="33%"><a>${tr.cells[6].innerHTML}</a></td> <td width="33%"><a>${tr.cells[7].innerHTML}</a></td> </tr> <tr><td colspan="3"><a>${tr.cells[8].innerHTML}</a></td> </tr> <tr><td colspan="3"><hr></td></tr> <tr> <td rowspan="3" width="50%"><label for="comm">Выполненные работы</label><textarea placeholder="Какие работы были выполнены, или любые другие комментарии" id="whatWasDoneId" name="comm">${tr.cells[11].innerHTML}</textarea> </td> <td><a>Статус</a></td> <td><select id="selStatusId" value="${tr.cells[10].innerHTML}"><option value="def">Дефектация</option><option value="complite">Ремонт выполнен</option><option value="waiting">Ожидание запчастей</option><option value="needcall">Согласовать с клиентом</option><option value="act">АКТ дефектации</option><option value="closed">Техника у клиента</option></select></td> </tr> <tr><td><lable for="countOfPrint">Кол-во отпечатков</lable></td><td><input type="number" id="countOfPrint" min="0" value="${tr.cells[13].innerHTML}"></td></tr><tr id="lastRow"> <td><a>Сумма</a></td> <td><input type="text" id="sumId" value="${tr.cells[12].innerHTML}"></td> </tr></tbody> </table> </div><div class="detailTaskSubButtons"><input type="button" value="Сохранить" onClick ="saveDetailTask(${id},${warr})" class="submitButton"><input type="button" value="Отмена" onClick="cancelForm('detailTaskFormId')" class="submitButton"></div>`;
-        let htmlForWarr = `<div id="detailTaskFormIdHeader" class="detailTaskFormIdHeader"><a>№${tr.cells[0].innerHTML} от ${tr.cells[1].innerHTML}</a></div><div class="detailTaskInfo"  id="detailTaskTbody"><div class="printMenuButton"><img src="/images/printer.png" onclick="printMenu(${id})"><div class="printOptions" id ="printOptions" style="display: none;"><div onclick="getKvit(${id})"><a>Квитанция</a></div><div onclick="checkTypeOfWork(${id})"><a>АКТ выполненных работ</a></div><div><a>АКТ дефектации</a></div></div></div> <table> <tbody> <tr> <td width="33%"><a>${tr.cells[5].innerHTML}</a></td> <td width="33%"><a>${tr.cells[6].innerHTML}</a></td> <td width="33%"><a>${tr.cells[7].innerHTML}</a></td> </tr> <tr><td colspan="3"><a>${tr.cells[8].innerHTML}</a></td> </tr> <tr><td colspan="3"><hr></td></tr> <tr> <td rowspan="3" width="50%"><label for="comm">Выявленный дефект</label><textarea placeholder="Вывленный дефект в результате диагностики" id="whatWasDoneId" name="comm">${tr.cells[11].innerHTML}</textarea> </td> <td><a>Статус</a></td> <td><select id="selStatusId" value="${tr.cells[10].innerHTML}"><option value="def">Дефектация</option><option value="complite">Ремонт выполнен</option><option value="waiting">Ожидание запчастей</option><option value="needcall">Согласовать с клиентом</option><option value="act">АКТ дефектации</option><option value="closed">Техника у клиента</option></select></td> </tr> <tr><td><lable for="countOfPrint">Кол-во отпечатков</lable></td><td><input type="number" id="countOfPrint" min="0" value="${tr.cells[13].innerHTML}"></td></tr> <tr id="lastRow"> <td><a>Статус заказа</a></td> <td><input type="text" id="orderStatus" value="" readonly="true"></td> </tr></tbody> </table> </div><div class="detailTaskSubButtons"><input type="button" value="Сохранить" onClick ="saveDetailTask(${id},${warr})" class="submitButton"><input type="button" value="Отмена" onClick="cancelForm('detailTaskFormId')" class="submitButton"></div>`;
+        let htmlForPay = `<div id="detailTaskFormIdHeader" class="detailTaskFormIdHeader"><a>№${tr.cells[0].innerHTML} от ${tr.cells[1].innerHTML}</a></div><div class="detailTaskInfo"  id="detailTaskTbody"> <div class="printMenuButton"><img src="/images/printer.png" onclick="printMenu(${id})"><div class="printOptions" id ="printOptions" style="display: none;"><div onclick="getKvit(${id})"><a>Квитанция</a></div></div></div><table> <tbody> <tr> <td width="33%"><a>${tr.cells[5].innerHTML}</a></td> <td width="33%"><a>${tr.cells[6].innerHTML}</a></td> <td width="33%"><a>${tr.cells[7].innerHTML}</a></td> </tr> <tr><td colspan="3"><a>${tr.cells[8].innerHTML}</a></td> </tr> <tr><td colspan="3"><hr></td></tr> <tr> <td rowspan="3" width="50%"><label for="comm">Выполненные работы</label><textarea placeholder="Какие работы были выполнены, или любые другие комментарии" id="whatWasDoneId" name="comm">${tr.cells[11].innerHTML}</textarea> </td> <td><a>Статус</a></td> <td><select id="selStatusId" value="${tr.cells[10].innerHTML}"><option value="def">Дефектация</option><option value="complite">Ремонт выполнен</option><option value="waiting">Ожидание запчастей</option><option value="needcall">Согласовать с клиентом</option><option value="act">АКТ дефектации</option><option value="needWork">У клиента до прихода запчасти</option><option value="closed">Техника выдана клиенту</option></select></td> </tr> <tr><td><lable for="countOfPrint">Кол-во отпечатков</lable></td><td><input type="number" id="countOfPrint" min="0" value="${tr.cells[13].innerHTML}"></td></tr><tr id="lastRow"> <td><a>Сумма</a></td> <td><input type="text" id="sumId" value="${tr.cells[12].innerHTML}"></td> </tr></tbody> </table> </div><div class="detailTaskSubButtons"><input type="button" value="Сохранить" onClick ="saveDetailTask(${id},${warr})" class="submitButton"><input type="button" value="Отмена" onClick="cancelForm('detailTaskFormId')" class="submitButton"></div>`;
+        let htmlForWarr = `<div id="detailTaskFormIdHeader" class="detailTaskFormIdHeader"><a>№${tr.cells[0].innerHTML} от ${tr.cells[1].innerHTML}</a></div><div class="detailTaskInfo"  id="detailTaskTbody"><div class="printMenuButton"><img src="/images/printer.png" onclick="printMenu(${id})"><div class="printOptions" id ="printOptions" style="display: none;"><div onclick="getKvit(${id})"><a>Квитанция</a></div><div onclick="checkTypeOfWork(${id})"><a>АКТ выполненных работ</a></div><div><a>АКТ дефектации</a></div></div></div> <table> <tbody> <tr> <td width="33%"><a>${tr.cells[5].innerHTML}</a></td> <td width="33%"><a>${tr.cells[6].innerHTML}</a></td> <td width="33%"><a>${tr.cells[7].innerHTML}</a></td> </tr> <tr><td colspan="3"><a>${tr.cells[8].innerHTML}</a></td> </tr> <tr><td colspan="3"><hr></td></tr> <tr> <td rowspan="3" width="50%"><label for="comm">Выявленный дефект</label><textarea placeholder="Вывленный дефект в результате диагностики" id="whatWasDoneId" name="comm">${tr.cells[11].innerHTML}</textarea> </td> <td><a>Статус</a></td> <td><select id="selStatusId" value="${tr.cells[10].innerHTML}"><option value="def">Дефектация</option><option value="complite">Ремонт выполнен</option><option value="waiting">Ожидание запчастей</option><option value="needcall">Согласовать с клиентом</option><option value="act">АКТ дефектации</option><option value="needWork">У клиента до прихода запчасти</option><option value="closed">Техника выдана клиенту</option></select></td> </tr> <tr><td><lable for="countOfPrint">Кол-во отпечатков</lable></td><td><input type="number" id="countOfPrint" min="0" value="${tr.cells[13].innerHTML}"></td></tr> <tr id="lastRow"> <td><a>Статус заказа</a></td> <td><input type="text" id="orderStatus" value="" readonly="true"></td> </tr></tbody> </table> </div><div class="detailTaskSubButtons"><input type="button" value="Сохранить" onClick ="saveDetailTask(${id},${warr})" class="submitButton"><input type="button" value="Отмена" onClick="cancelForm('detailTaskFormId')" class="submitButton"></div>`;
         let detailTaskForm = document.createElement('form');
         detailTaskForm.id = "detailTaskFormId";
         detailTaskForm.className = "detailTaskForm";
@@ -984,12 +984,39 @@ function addRowForWerehouse(i){
     row.id = "rowWerehouse" + i;
     row.innerHTML = `<td><input type="button" id="addRowButton`+ i +`" onclick="addRowForWerehouse(${i+1})" value="+"></td><td><input type="text" id="inputPartNumber`+ i +`"></td><td><input type="text" id="inputDescription`+i+`"></td><td><input type="number" id="inputCount`+ i +`" min="1" value="1"></td><td><input type="number" id="inputPrice`+ i +`" min="0" value="0"></td>`;
     tbody.append(row);
-    document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getInfoParts(this.value, "inputDescription" + i)});
+    document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getInfoPartsWereh(this.value, "inputDescription" + i, "inputPrice" +i)});
     if (i>0) {
         document.getElementById('addRowButton' + (i-1)).value = "-";
         document.getElementById('addRowButton' + (i-1)).setAttribute('onclick', 'javascript:cancelForm("rowWerehouse'+ (i-1) +'")');
         document.getElementById('addToContent').scrollTop = document.getElementById('addToContent').scrollHeight;
     };
+}
+/**заполнение дескрипшона и цены при пополнении склада */
+async function getInfoPartsWereh(pnumber, idDesc, idPrice){
+    pnumber = String(pnumber).trim();
+    if(pnumber.length>0){
+        let response = await fetch ('/price/info/' + pnumber, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+                },
+            });
+        let result = await response.json();
+         //   console.log(result[0]);
+        if (result.length > 0){
+                document.getElementById(idDesc).value = result[0].description;
+                document.getElementById(idPrice).value = convert(result[0].price);
+        }    
+    }
+}
+/**конвертация цены */
+function convert(price){
+    let tmp = '';
+    for(let i=0;i<price.length;i++){
+        if (price[i] != ',') tmp += price[i];
+        if (price[i] == ',') tmp += '.';
+    }
+    return tmp;
 }
 /**таблица наличие на складе */
 function createTableOfWerehouse(type){

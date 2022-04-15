@@ -248,6 +248,7 @@ function writeOffRowForWerehouse(i){
         document.getElementById('writeOffContent').scrollTop = document.getElementById('writeOffContent').scrollHeight;
     };
 }
+
 /**проверка наличия на складе
  * pnumber = партномер детали
  * idDesc = id поля описание
@@ -283,12 +284,39 @@ function addRowForWerehouse(i){
     row.id = "rowWerehouse" + i;
     row.innerHTML = `<td><input type="button" id="addRowButton`+ i +`" onclick="addRowForWerehouse(${i+1})" value="+"></td><td><input type="text" id="inputPartNumber`+ i +`"></td><td><input type="text" id="inputDescription`+i+`"></td><td><input type="number" id="inputCount`+ i +`" min="1" value="1"></td><td><input type="number" id="inputPrice`+ i +`" min="0" value="0"></td>`;
     tbody.append(row);
-    document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getInfoParts(this.value, "inputDescription" + i)});
+    document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getInfoPartsWereh(this.value, "inputDescription" + i, "inputPrice" +i)});
     if (i>0) {
         document.getElementById('addRowButton' + (i-1)).value = "-";
         document.getElementById('addRowButton' + (i-1)).setAttribute('onclick', 'javascript:cancelForm("rowWerehouse'+ (i-1) +'")');
         document.getElementById('addToContent').scrollTop = document.getElementById('addToContent').scrollHeight;
     };
+}
+/**заполнение дескрипшона и цены при пополнении склада */
+async function getInfoPartsWereh(pnumber, idDesc, idPrice){
+    pnumber = String(pnumber).trim();
+    if(pnumber.length>0){
+        let response = await fetch ('/price/info/' + pnumber, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+                },
+            });
+        let result = await response.json();
+         //   console.log(result[0]);
+        if (result.length > 0){
+                document.getElementById(idDesc).value = result[0].description;
+                document.getElementById(idPrice).value = convert(result[0].price);
+        }    
+    }
+}
+/**конвертация цены */
+function convert(price){
+    let tmp = '';
+    for(let i=0;i<price.length;i++){
+        if (price[i] != ',') tmp += price[i];
+        if (price[i] == ',') tmp += '.';
+    }
+    return tmp;
 }
 /**таблица наличие на складе */
 function createTableOfWerehouse(type){

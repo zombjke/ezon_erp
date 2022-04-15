@@ -161,6 +161,11 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
     controller.getInfoFromArrival
   );
+  app.get(
+    "/price/info/:id",
+    [authJwt.verifyToken, authJwt.isWerehouseOrAdmin],
+    controller.getInfoFromWereh
+  );
 
   app.get(
     "/writeoff/",

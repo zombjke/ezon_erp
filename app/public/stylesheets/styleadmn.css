@@ -365,7 +365,7 @@ width: 5%;
     resize: none;
 }
 .addPartNumber{
-    width: 100%;
+    max-width: 100%;
      table-layout: fixed; 
     
     
@@ -412,8 +412,9 @@ width: 5%;
     text-align: center;    
 }
 .checkTypeOfWorkInfo{
-    width: 100%;
+    max-width: 100%;
     margin-left: 20px;
+    margin-right: 20px;
 }
 .checkTypeOfWork{
     width: 700px;
