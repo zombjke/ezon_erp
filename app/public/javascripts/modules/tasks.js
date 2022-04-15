@@ -105,10 +105,11 @@ function createTableOfTasks(){
 }
 /** заполнение таблицы с заявками */
 async function getDataFromTasks(){
+    let url = '/tasks/user/';
     let temp = "";
     let tmp = "";
     let table = document.getElementById("tasksTableBody");
-    let response = await fetch ('/tasks/user/', {
+    let response = await fetch (url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
