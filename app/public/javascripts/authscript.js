@@ -30,6 +30,8 @@ async function login(){
     if (responce.status >= 400){
       return alertBox(result.message);
     }else if(responce.status == 200){
+      console.log(result);
+      sessionStorage.setItem('role', result.role);
       sessionStorage.setItem('username', result.username);
       sessionStorage.setItem('office', result.office);
       window.location.replace(result.redirect);

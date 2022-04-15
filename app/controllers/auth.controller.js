@@ -86,16 +86,16 @@ exports.signin = (req, res) => {
         });  */
         
         if(authorities[0] == 'ROLE_USER'){
-          res.status(200).send({redirect: '/home', username: user.username, office: user.office});
+          res.status(200).send({redirect: '/home', username: user.username, office: user.office, role: authorities[0]});
           
         }else if(authorities[0] === "ROLE_MODERATOR") {
-          res.status(200).send({redirect: '/mngr', username: user.username, office: user.office});
+          res.status(200).send({redirect: '/mngr', username: user.username, office: user.office, role: authorities[0]});
           
         }else if(authorities[0] === "ROLE_ADMIN"){
-          res.status(200).send({redirect: '/adminpage', username: user.username, office: user.office});
+          res.status(200).send({redirect: '/adminpage', username: user.username, office: user.office, role: authorities[0]});
           
         }else if(authorities[0] === "ROLE_WEREHOUSE"){
-          res.status(200).send({redirect: '/werehpage', username: user.username, office: user.office});
+          res.status(200).send({redirect: '/werehpage', username: user.username, office: user.office, role: authorities[0]});
         };  
         
       });

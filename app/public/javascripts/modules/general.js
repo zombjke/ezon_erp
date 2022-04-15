@@ -68,3 +68,14 @@ function reportPage(){
 function cancelForm(id){
     document.getElementById(id).remove();
 }
+function addTopButtons(){
+    let html = ``;
+    switch(sessionStorage.getItem('role')){
+        case 'ROLE_ADMIN': html = `<div class="topButtons"><button id="usersButton" class="button" onclick="usersPage()">Пользователи</button><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="werehButton" class="button" onclick="werehousePage()">Склад</button><button id="reportButton" class="button" onclick="reportPage()">Отчет</button><button id="priceButton" class="button" onclick="priceForm()">Цена</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`; break;
+        case 'ROLE_USER' : html = `<div class="topButtons"><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`; break;
+        case 'ROLE_MODERATOR': html = `<div class="topButtons"><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="reportButton" class="button" onclick="reportPage()">Отчет</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`; break;
+        case 'ROLE_WEREHOUSE': html = `<div class="topButtons"><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="werehButton" class="button" onclick="werehousePage()">Склад</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`; break;
+    }
+    document.body.innerHTML = "";
+    document.body.innerHTML = html;
+}
