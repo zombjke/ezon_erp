@@ -91,7 +91,7 @@ return `<!doctype html>
 </table>
 	<table width="100%" border="0">
   <tbody>
-  <tr> <td> ${warranty} </td> </tr>
+  <tr><td> ${warranty} </td></tr>
     <tr>
       <td colspan="2" align="center" ><strong>Условия приема оборудования в ремонт</strong></td>
     </tr>
