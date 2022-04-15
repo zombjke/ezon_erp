@@ -968,7 +968,7 @@ async function getAvailable(pnumber, idDesc, idCount, idMinPrice){
         if (result.length > 0){
                 document.getElementById(idDesc).value = result[0].description;
                 document.getElementById(idCount).value = result[0].count;
-                document.getElementById(idMinPrice).value = result[0].sellprice;
+                document.getElementById(idMinPrice).value = result[0].sellprice.toFixed(2);
         }else{
                 document.getElementById(idDesc).value = "НЕТ В НАЛИЧИИ";
                 document.getElementById(idCount).value = "";
