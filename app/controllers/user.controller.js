@@ -100,10 +100,11 @@ exports.getTasksUser = (req, res) => {
 
 exports.changeTask = (req, res) => {
   if(!req.body) return res.sendStatus(400);
-  //console.log(req.body);
+  
   if (req.body[0] == 'complite'){
     let today = new Date().toLocaleDateString('en-ca');
-    let data = [today, req.body[3]]
+    let data = [today, req.body[4]]
+    console.log(req.body);
     pool.query('UPDATE application SET compliteDate = ? WHERE numb = ?', data, (error, result) => {
       if (error) throw error;
     });
@@ -427,6 +428,13 @@ exports.getPrice = (req, res) => {
 
 exports.getInfoFromArrival = (req, res) => {
   pool.query('SELECT * FROM availablity WHERE partNumber = ?', req.params.id, (error, result) => {
+    if (error) throw error;
+    res.status(200).send(result);
+  });
+}
+
+exports.getInfoFromWereh = (req, res) => {
+  pool.query('SELECT * FROM werehouse WHERE partNumber = ?', req.params.id, (error, result) => {
     if (error) throw error;
     res.status(200).send(result);
   });
