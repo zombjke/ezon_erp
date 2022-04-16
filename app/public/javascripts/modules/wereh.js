@@ -18,7 +18,7 @@ function addSelfButtons(){
 /**таблица списка наличия товаров на складе */
 function listWerehouse(){
     addTopButtons();
-    addButton('findPartButton', '?', findPart);
+    addSerchBar();
     createTableOfWerehouse(1);
     getDataToWerehouseTable(1);
 }
@@ -373,7 +373,27 @@ function checkTaskNumber(taskNumber){
 }
 /**поиск детали */
 function findPart(){
-
+    let parts = document.getElementById('werehouseTbody').querySelectorAll('tr');
+    let body = document.getElementById('inputSearchWereh').value;
+    if(body.length>0){
+        searchPlace();
+        document.getElementById('searchIcon').className = 'bi bi-x-circle';
+    }else{
+        document.getElementById('searchIcon').className = 'bi bi-search';
+        cancelSearch();
+        
+    }
+    let tr = "";
+    if(body.length>3){
+        for(let i=0;i<parts.length;i++){
+            let td = parts[i].querySelectorAll('td');
+            if (td[1].innerText.includes(body)){
+                tr += "<tr><td>" + td[1].innerText + "</td><td>" + td[2].innerText + "</td><td>" + td[3].innerText + "</td></tr>";
+               
+            }
+        }
+        document.getElementById('searchTable').innerHTML = tr;
+    }
 }
 /**детали по запчасти */
 function detailPartList(id){
@@ -386,4 +406,33 @@ function detailArrival(id){
 /**детали списания со склада */
 function detailWriteOff(id){
 
+}
+
+/**поисковая панель */
+function addSerchBar(){
+    let searchBar = document.createElement('div');
+    searchBar.className = "searchWereh";
+    searchBar.id = "searchWereh";
+    searchBar.innerHTML = `<input type="text" placeholder="Поиск по партномеру..." id="inputSearchWereh"><span class="searchIcon" onclick="cancelSearch()"><i id="searchIcon" class="bi bi-search"></i></span></input>`;
+    document.body.append(searchBar);
+    document.getElementById('inputSearchWereh').addEventListener('input', findPart);
+}
+/**отмена поиска */
+function cancelSearch(){
+    if (document.getElementById('searchPlace')){
+        document.getElementById('searchIcon').className = 'bi bi-search';
+        document.getElementById('inputSearchWereh').value = "";
+        cancelForm('searchPlace');
+    }
+    
+}
+/**поле для результатов поиска */
+function searchPlace(){
+    if (!document.getElementById("searchPlace")){
+        let place = document.createElement('div')
+        place.className = "searchPlace";
+        place.id = "searchPlace";
+        place.innerHTML = `<table><thead><tr><th>Парт номер</th><th>Описание</th><th>Количество</th></tr></thead><tbody id="searchTable"></tbody></table>`;
+        document.body.append(place);
+    }
 }
