@@ -53,12 +53,20 @@ function reportPage(){
  func = имя функции сработающей по клику */
  function addButton(id, val, func, where){
     if (!document.getElementById(id)){
+        let html = "";
+        switch (val){
+            case '+': html = `<span class="iconsStyle"><i class="bi bi-journal-plus"></i></span>`; break;
+            case '-': html = `<span class="iconsStyle"><i class="bi bi-journal-minus"></i></span>`; break;
+            case '=': html = `<span class="iconsStyle"><i class="bi bi-journal-text"></i></span>`; break;
+            case '?': html = `<span class="iconsStyle"><i class="bi bi-search"></i></span>`; break;
+        }
         let loc;
-        let btn = document.createElement('input');
-        btn.className = "button";
+        let btn = document.createElement('div');
+        btn.className = "smallButton";
         btn.id = id;
-        btn.type = "button";
-        btn.value = val;
+       // btn.type = "button";
+      //  btn.value = val;
+        btn.innerHTML = html;
         btn.addEventListener('click', func);
         where!=undefined ? loc = document.getElementById(where) : loc = document.body;
         loc.append(btn);
@@ -71,7 +79,7 @@ function cancelForm(id){
 function addTopButtons(){
     let html = ``;
     switch(sessionStorage.getItem('role')){
-        case 'ROLE_ADMIN': html = `<div class="topButtons"><button id="usersButton" class="button" onclick="usersPage()">Пользователи</button><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="werehButton" class="button" onclick="werehousePage()">Склад</button><button id="reportButton" class="button" onclick="reportPage()">Отчет</button><button id="priceButton" class="button" onclick="priceForm()">Цена</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`; break;
+        case 'ROLE_ADMIN': html = `<div class="topButtons"><button id="usersButton" class="button" onclick="usersPage()">Пользователи</button><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="werehButton" class="button" onclick="werehousePage()">Склад</button><button id="reportButton" class="button" onclick="reportPage()">Отчет</button><button id="priceButton" class="button" onclick="priceForm()">Цена</button><button id="logOutButton" class="button" onclick="logOut()" title="Выход из системы"><i class="bi bi-x-square"></i></button><hr></div>`; break;
         case 'ROLE_USER' : html = `<div class="topButtons"><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`; break;
         case 'ROLE_MODERATOR': html = `<div class="topButtons"><button id="tasksButton" class="button" onclick="tasksPage()">Система заявок</button><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="reportButton" class="button" onclick="reportPage()">Отчет</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`; break;
         case 'ROLE_WEREHOUSE': html = `<div class="topButtons"><button id="storeButton" class="button" onclick="storePage()">Система заказов</button><button id="werehButton" class="button" onclick="werehousePage()">Склад</button><button id="logOutButton" class="button" onclick="logOut()">Выход из системы</button><hr></div>`; break;

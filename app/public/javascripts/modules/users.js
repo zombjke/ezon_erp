@@ -22,7 +22,7 @@ async function getDataFromUsers (){
       });
     let result = await response.json();
     for(let i=0; i < result.length; i++){
-        temp += "<tr id='" + result[i].id + "' onClick='openUserDetail(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].username + "<\/td><td>" + result[i].office + "<\/td><td>" + chooseRole(result[i].roleid) + "<\/td><td><button class='delUserBtn' onClick='removeUser(" + result[i].id + ")'>удалить</button><\/td><\/tr>"
+        temp += "<tr id='" + result[i].id + "' onClick='openUserDetail(" + result[i].id +")'><td>" + result[i].id + "<\/td><td>" + result[i].username + "<\/td><td>" + result[i].office + "<\/td><td>" + chooseRole(result[i].roleid) + "<\/td><td><button class='delUserBtn' onClick='removeUser(" + result[i].id + ")'><i class='bi bi-trash3'></i></button><\/td><\/tr>"
     }
     userTable.innerHTML = temp;
 }
@@ -82,13 +82,13 @@ function checkCorrectPass(){
     let cnfpass = document.getElementById('confPass');
     if (!pass.value || pass.value.length<8){
         pass.value = "";
-        pass.style.backgroundColor = "#FFC0CB";
+        pass.style.outline = "2px solid red";;
         pass.placeholder = "пароль >8 символов"
     }else if (pass.value != cnfpass.value){
         pass.value = "";
         cnfpass.value = "";
-        pass.style.backgroundColor = "#FFC0CB";
-        cnfpass.style.backgroundColor = "#FFC0CB";
+        pass.style.outline = "2px solid red";;
+        cnfpass.style.outline = "2px solid red";;
         pass.placeholder = "разные пароли";
     }else{
         return true;
@@ -143,7 +143,7 @@ async function saveNewUser(){
     if (!form.elements.password.value || form.elements.password.length <8){
         form.elements.password.value = "";
         form.elements.password.placeholder = "пароль < 8 символов";
-        form.elements.password.style.backgroundColor = "#FFC0CB";
+        form.elements.password.style.outline = "2px solid red";;
     }else{
         let data = {
             'username': form.elements.username.value,

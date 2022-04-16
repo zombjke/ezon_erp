@@ -11,6 +11,9 @@ function addSelfButtons(){
     addButton('listWerehouseButton', '=', listWerehouse, div.id); // список товара на складе
     addButton('arrivalToWerehouseButton', '+', arrivalToWerehouse, div.id); //список прихода
     addButton('writeOffFromWerehouseButton', '-', writeOffFromWerehouse, div.id); //списание со склада
+    document.getElementById('listWerehouseButton').innerHTML += "<span class='textInButton'>  Наличие на складе</span>"
+    document.getElementById('arrivalToWerehouseButton').innerHTML += "<span class='textInButton'>  Пополнение склада</span>"
+    document.getElementById('writeOffFromWerehouseButton').innerHTML += "<span class='textInButton'>  Списание со склада</span>"
 }
 /**таблица списка наличия товаров на складе */
 function listWerehouse(){
@@ -51,7 +54,7 @@ function writeOff(){
         let form = document.createElement('form');
         form.id = 'writeOffId';
         form.className = 'writeOff';
-        form.innerHTML = `<div id="writeOffIdHeader" class="writeOffHeader">СПИСАНИЕ со склада</div><div id="writeOffContent" class="writeOffContent"><select id="type"><option value="0">Гарантийный ремонт</option><option value="1">Продажа</option><option value="2">Списание</option></select><input type="number" min="1" id="taskNumber" placeholder="№ заявки"><input type="text" id="where" placeholder="ФИО инженера"><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Наличие</td><td>Количество</td><td width="20px">Мин цена</td><td>Цена</td></tr></thead><tbody id="writeOffBody"></tbody></table></div><div class="writeOffSubButtons"><input type="button" class="submitButton" onclick="checkWriteOff()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('writeOffId')" value="Отмена"></div>`;
+        form.innerHTML = `<div id="writeOffIdHeader" class="writeOffHeader">СПИСАНИЕ со склада</div><div id="writeOffContent" class="writeOffContent"><select id="type"><option value="0">Гарантийный ремонт</option><option value="1">Продажа</option><option value="2">Списание</option></select><input type="number" min="1" id="taskNumber" placeholder="№ заявки"><input type="text" id="where" placeholder="ФИО инженера"><div class="sumAllDiv"><label>ИТОГО</label><input type="text" id="sumAll" readonly></div><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Наличие</td><td>Количество</td><td width="20px">Мин цена</td><td>Цена</td><td>Сумма</td></tr></thead><tbody id="writeOffBody"></tbody></table></div><div class="writeOffSubButtons"><input type="button" class="submitButton" onclick="checkWriteOff()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('writeOffId')" value="Отмена"></div>`;
         document.body.append(form);
         writeOffRowForWerehouse(0);
         dragElement(document.getElementById(form.id));
@@ -113,9 +116,9 @@ function checkWriteOff(){
     if (selector.value == 0){
         if (form.elements.taskNumber.value.length > 0){
             objData.taskNumber = form.elements.taskNumber.valueAsNumber;
-            form.elements.taskNumber.style.backgroundColor = "";
+            form.elements.taskNumber.style.outline = "";
         }else{            
-            form.elements.taskNumber.style.backgroundColor = "red";
+            form.elements.taskNumber.style.outline = "2px solid red";
             return;
         }
     }else{
@@ -124,15 +127,19 @@ function checkWriteOff(){
 
     if(form.elements.where.value.length > 0){
         objData.where = form.elements.where.value;
-        form.elements.where.style.backgroundColor = "";
+        form.elements.where.style.outline = "";
     }else{
-        form.elements.where.style.backgroundColor = "red";
+        form.elements.where.style.outline = "2px solid red";
         return;
     }
 
     let trs = document.getElementById('writeOffBody').querySelectorAll('tr');
     for(let i=0;i<trs.length;i++){
         let inputs = trs[i].querySelectorAll('input');
+            if(i==0 && i+1==trs.length && inputs[1].value.trim().length <= 1){
+                inputs[1].style.outline = "2px solid red";
+                return;
+            }
         
             if (inputs[1].value.trim().length > 1){
                 if (parseFloat(inputs[4].value) <= parseFloat(inputs[3].value) && parseFloat(inputs[6].value) >= parseFloat(inputs[5].value)){
@@ -141,10 +148,10 @@ function checkWriteOff(){
                 objData.sum += ((inputs[6].valueAsNumber * 100) * inputs[4].valueAsNumber) / 100;
                 } else {
                     if(parseFloat(inputs[4].value) > parseFloat(inputs[3].value)) {
-                    inputs[4].style.backgroundColor = "red";
+                    inputs[4].style.outline = "2px solid red";
                     }
                     if(parseFloat(inputs[6].value) < parseFloat(inputs[5].value)) {
-                    inputs[6].style.backgroundColor = "red";
+                    inputs[6].style.outline = "2px solid red";
                     }
                 return;
                 }   
@@ -174,10 +181,10 @@ function writeOffRowForWerehouse(i){
     let tbody = document.getElementById('writeOffBody');
     let row = document.createElement('tr');
     row.id = "rowWerehouse" + i;
-    row.innerHTML = `<td><input type="button" id="addRowButton`+ i +`" onclick="writeOffRowForWerehouse(${i+1})" value="+"></td><td><input type="text" id="inputPartNumber`+ i +`"></td><td><input type="text" id="inputDescription`+i+`" readonly></td><td><input type="text" id="available`+i+`" class="helpFields" readonly></td><td><input type="number" id="inputCount`+ i +`" min="1" value="1"></td><td><input type="text" id="minPrice`+i+`" class="helpFields" readonly></td><td><input type="number" id="inputPrice`+ i +`" min="0" value="0" step="0.01"></td>`;
+    row.innerHTML = `<td><input type="button" id="addRowButton`+ i +`" onclick="writeOffRowForWerehouse(${i+1})" value="+"></td><td><input type="text" id="inputPartNumber`+ i +`"></td><td><input type="text" id="inputDescription`+i+`" readonly></td><td><input type="text" id="available`+i+`" class="helpFields" readonly></td><td><input type="number" class="shortFields" id="inputCount`+ i +`" min="1" value="1"></td><td><input type="text" id="minPrice`+i+`" class="helpFields" readonly></td><td><input type="number" class="shortFields" id="inputPrice`+ i +`" min="0" value="0" step="0.01"></td><td><input type="text" id="sumPrice`+i+`" class="helpFields" readonly></td>`;
     tbody.append(row);
-    document.getElementById('inputCount' + i).addEventListener('change', function() {if (parseFloat(document.getElementById('available' + i).value) < parseFloat(this.value)) {this.style.backgroundColor = "red"; this.style.color = "white";}else{this.style.backgroundColor = ""; this.style.color = ""}});
-    document.getElementById('inputPrice' + i).addEventListener('change', function() {if (parseFloat(document.getElementById('minPrice' + i).value) > parseFloat(this.value)) {this.style.backgroundColor = "red"; this.style.color = "white";}else{this.style.backgroundColor = ""; this.style.color = ""}});
+    document.getElementById('inputCount' + i).addEventListener('change', function() {sumPrice('inputCount' + i, 'inputPrice' + i, 'sumPrice'+i); sumAllPrice(); if (parseFloat(document.getElementById('available' + i).value) < parseFloat(this.value)) {this.style.backgroundColor = "red"; this.style.color = "white";}else{this.style.backgroundColor = ""; this.style.color = ""}});
+    document.getElementById('inputPrice' + i).addEventListener('change', function() {sumPrice('inputCount' + i, 'inputPrice' + i, 'sumPrice'+i); sumAllPrice(); if (parseFloat(document.getElementById('minPrice' + i).value) > parseFloat(this.value)) {this.style.backgroundColor = "red"; this.style.color = "white";}else{this.style.backgroundColor = ""; this.style.color = ""}});
     document.getElementById('inputPartNumber' + i).addEventListener('blur', function() {getAvailable(this.value, "inputDescription" + i, "available" + i, "minPrice" + i)});
     if (i>0) {
         document.getElementById('addRowButton' + (i-1)).value = "-";
@@ -185,6 +192,22 @@ function writeOffRowForWerehouse(i){
         document.getElementById('writeOffContent').scrollTop = document.getElementById('writeOffContent').scrollHeight;
     };
 }
+/**обработка суммы строки СПИСАНИЕ СО СКЛАДА*/
+function sumPrice(inputCountId, inputPriceId, sumPriceId){
+    document.getElementById(sumPriceId).value = (document.getElementById(inputCountId).valueAsNumber * document.getElementById(inputPriceId).valueAsNumber).toFixed(2);
+   
+}
+/**сумма всех сумм СПИСАНИЕ СО СКЛАДА*/
+function sumAllPrice(){
+    let tmp = 0;
+    let trs = document.getElementById('writeOffBody').querySelectorAll('tr');
+    for(let i=0;i<trs.length;i++){
+        let inputs = trs[i].querySelectorAll('input');
+        if (inputs[7].value.length > 0) tmp += parseFloat(inputs[7].value);
+    }
+    document.getElementById('sumAll').value = tmp.toFixed(2);
+}
+
 /**проверка наличия на складе
  * pnumber = партномер детали
  * idDesc = id поля описание

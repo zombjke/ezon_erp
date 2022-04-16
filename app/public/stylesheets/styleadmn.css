@@ -1,3 +1,14 @@
+.iconsStyle i{
+    font-size: 25px;
+    padding: 0px;    
+}
+.smallButton{
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 5px;
+    margin-top: 5px;
+    
+}
 .topButtons {
     position: fixed;
     top: 0%;
@@ -8,6 +19,9 @@
     
 }
 
+#logOutButton:hover{
+    background-color: rgb(201, 77, 77);
+}
 .button {
     margin-top: 5px;
     margin-left: 5px;
@@ -37,36 +51,39 @@
     z-index: 200;
     background-color: #e8eaee17;
      backdrop-filter: blur(2px);
-    padding: 3px;
-    padding-right: 7.5px;
+     padding-right: 7.5px;
     padding-bottom: 7.5px;
     position: fixed;
      border-radius: 10px;
-     display: table;
-     vertical-align: top;
-     border-width: 0.5px;
+     display: inline-block;
+       border-width: 0.5px;
      border-color: #000000;
      border-style: solid;
-    
+  
+ }
+ .delUserBtn{
+     font-size: 20px;
+     border: none;
+     background-color: rgba(255, 255, 255, 0);
+ }
+ .delUserBtn:hover{
+     color: red;
+ }
+ .textInButton{
+    position: relative;
+    top: -3px;
     
  }
-#listWerehouseButton {
-    display: table-cell;
-    background-color:#cf9f68 ;
-}
-#arrivalToWerehouseButton{
-    display: table-cell;
-    background-color:#cf9f68 ;
-    left: 90px;
-}
-#writeOffFromWerehouseButton{
-    display: table-cell;
-    background-color:#cf9f68 ;
-    left: 172px;
+
+#listWerehouseButton, #arrivalToWerehouseButton, #writeOffFromWerehouseButton{
+    background-color:#ffffff;
+    border: 1px solid grey;
+    cursor: pointer;
 }
 
 #addNewUserButton:hover, #addNewTaskButton:hover, #listWerehouseButton:hover, #arrivalToWerehouseButton:hover, #writeOffFromWerehouseButton:hover, #findPartButton:hover, #addToButton:hover, #writeOffButton:hover {
     background-color: #767b86;
+    color: white;
 }
 
 #logOutButton {
@@ -350,7 +367,34 @@ width: 5%;
     cursor:unset;
 
 }
+.shortFields{
+    width: 50px;
+}
+.sumAllDiv{
+    position: absolute;
+    background-color: white;
+    right: 5px;
+    top: 25px;
+    display: inline;
+    width: 120px;
+    padding: 0.2em;
+    border: 1px solid rgb(122, 122, 122);
+    border-radius: 5px;
+}
+.sumAllDiv label{
+    font-weight: bold;
+   
+}
+#sumAll{
+    max-width: 50px;
+    border: none;
+    cursor:unset;
+    margin-right: 2%;
+    font-weight: bold;
+    text-align: center;
+    color: green;
 
+}
 
 #fromWho {
     margin-left: 1%;
@@ -382,22 +426,22 @@ width: 5%;
     text-align: right;
     right: 5px;
     top: 20px;
+    font-size: 25px;
+    
 }
-.printMenuButton img{
-    max-width: 28px;
-    max-height: 28px;
+.printMenuButton:hover{
+    color: rgb(0, 0, 252);
 }
+
 .printOptions{
+    font-size: 16px;
     text-align: center;
     background-color: #e4f1f8;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.22);
     overflow: hidden;
     cursor: pointer;   
 }
-.printOptions div:hover{
-    box-shadow: inset 0 0 5px 5px rgba(0,0,0,0.5);
-}
-.printMenuButton .printOptions div:hover {
+.printOptions div:hover {
     background: #91b7c9;/*окрашивает синим цветом*/
     color: #fff;/*меняет цвет текста*/
     box-shadow: inset 0 0 5px 0px rgba(0,0,0,0.05);

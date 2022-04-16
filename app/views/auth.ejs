@@ -4,19 +4,20 @@
     <meta charset="utf-8">
     <script src="/javascripts/authscript.js"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/styleAuth.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/font/bootstrap-icons.css" />
     <title>Авторизация пользователей</title>
 </head>
 <body>
 
 <form id="authForm" onsubmit="return false">
-  <h2><span class="entypo-login"><i class="sign-in"></i></span> Войдите в систему</h2>
-  <button id="button" onclick="login()"><span class="entypo-lock"><i class="lock"></i></span></button>
-  <span class="entypo-user inputUserIcon">
-     <i class="user"></i>
+  <h2><span class="entypo-login"><i class="bi bi-fingerprint"></i></span> Войдите в систему</h2>
+  <button id="button" onclick="login()"><span class="entypo-lock"><i class="bi bi-box-arrow-in-right"></i></span></button>
+  <span class="inputUserIcon">
+     <i class="bi bi-person-fill"></i>
    </span>
   <input type="text" id="user" placeholder="login"/>
   <span class="entypo-key inputPassIcon">
-     <i class="key"></i>
+     <i class="bi bi-key-fill"></i>
    </span>
   <input type="password" id="pass"placeholder="password"/>
   <input type="text" id="messageBox" readonly>

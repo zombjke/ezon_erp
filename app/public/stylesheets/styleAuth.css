@@ -74,14 +74,14 @@ button {
  position:absolute;
  top:68px;
  right: 80px;
- color:white;
+ color:rgb(0, 0, 0);
 }
 
 .inputPassIcon {
  position:absolute;
  top:136px;
  right: 80px;
- color:white;
+ color:rgb(0, 0, 0);
 }
 
 input::-webkit-input-placeholder {
