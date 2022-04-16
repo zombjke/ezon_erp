@@ -413,7 +413,7 @@ function addSerchBar(){
     let searchBar = document.createElement('div');
     searchBar.className = "searchWereh";
     searchBar.id = "searchWereh";
-    searchBar.innerHTML = `<input type="text" placeholder="Поиск по партномеру..." id="inputSearchWereh"><span class="searchIcon" onclick="cancelSearch()"><i id="searchIcon" class="bi bi-search"></i></span></input>`;
+    searchBar.innerHTML = `<input type="text" placeholder="Поиск по партномеру..." id="inputSearchWereh"></input><span class="searchIcon" onclick="cancelSearch()"><i id="searchIcon" class="bi bi-search"></i></span>`;
     document.body.append(searchBar);
     document.getElementById('inputSearchWereh').addEventListener('input', findPart);
 }
