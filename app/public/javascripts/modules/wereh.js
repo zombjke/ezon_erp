@@ -387,7 +387,7 @@ function findPart(){
     if(body.length>3){
         for(let i=0;i<parts.length;i++){
             let td = parts[i].querySelectorAll('td');
-            if (td[1].innerText.includes(body)){
+            if (td[1].innerText.toUpperCase().includes(body)){
                 tr += "<tr><td>" + td[1].innerText + "</td><td>" + td[2].innerText + "</td><td>" + td[3].innerText + "</td></tr>";
                
             }
