@@ -1,4 +1,7 @@
 /**СИСТЕМА ЗАЯВОК */
+/**фильтр поиска поумолчанию */
+sessionStorage.setItem('filterTask', 'number');
+sessionStorage.setItem('filterGlobal', '0');
 /**форма новой заявки */
 function newTask(){
     if (!document.getElementById('newTaskId')){
@@ -414,4 +417,174 @@ async function getACTofComplite(id){
     let pdf = await res.blob();
     let pdfObj = URL.createObjectURL(pdf);
     window.open(pdfObj);
+}
+
+/**************************ПОИСК ПО ЗАЯВКЕ **********************/
+/**добавляем панель поиска в документ */
+function createSearchBarTasks(){
+    let bar = document.createElement('div');
+    bar.id = "searchBarTasks";
+    bar.className = "searchBarTasks";
+    bar.innerHTML = `<div class="inputFieldTasks"><input type="text" placeholder="Поиск по № заявки" id="inputSearchTasks"></input><span class="searchIconTasks" onclick="cancelFindTasks()"><i id="searchIconTasks" class="bi bi-search"></i></span></div><div class="filterFieldTasks" onclick="createFilterTasks()"><div class="filterButtonTasks" id="filterButtonTasks"><span class="filterIconTasks"><i class="bi bi-sliders"></i></span></div>`;
+    document.body.append(bar);
+    document.getElementById('inputSearchTasks').addEventListener('input', findTasksOnDocument);
+    
+}
+/**добавляем поле для результатов поиска */
+function createSearchPlaceTasks(){
+    if (!document.getElementById('SearchPlaceTasks')){
+        let place = document.createElement('div');
+        place.id = "SearchPlaceTasks";
+        place.className = "SearchPlaceTasks";
+        place.innerHTML = `<table id="searchTaskTable" class="searchTaskTable"><thead><th>№</th><th>Дата</th><th>ФИО</th><th>Телефон</th><th>Вендор</th><th>Модель</th><th>Серийник</th><th>Дефект</th><th>Статус</th><th>Комент</th><th>Сумма</th></thead><tbody id="searchTaskBody"></tbody></table>`;
+        document.body.append(place);
+        window.addEventListener('click', () => closeFilterByClick(event, 'SearchPlaceTasks'));
+
+    }
+}
+/**функция поиска по документу*/
+function findTasksOnDocument(){
+    if (document.getElementById('filterTasks')){
+        closeFilter('filterTasks');
+    }
+    let globalFilter = sessionStorage.getItem('filterGlobal');
+    if (globalFilter == 1){findTasksOnDB(); return;}
+
+    let body = document.getElementById('inputSearchTasks').value;
+    let trs = document.getElementById('tasksTableBody').querySelectorAll('tr');
+    let tr = "";
+    let where = 0;
+    let searchFilter = sessionStorage.getItem('filterTask');
+    switch(searchFilter){
+        case 'number': {
+            where = 0;           
+            break};
+        case 'name': {
+            where = 2;
+            break};
+        case 'phone': {
+            where = 3;
+            break};
+        case 'serial': {
+            where = 7;
+            break};
+        case 'model': {
+            where = 6;
+            break};
+    }
+
+    if (body.length > 0){
+        createSearchPlaceTasks();
+        for(let i=0;i<trs.length;i++){
+            let td = trs[i].querySelectorAll('td');
+            if (td[where].innerText.toUpperCase().includes(body.toUpperCase()))
+            tr += "<tr onclick='detailTask(" + td[0].innerText + ", " + getWarranty(getComputedStyle(td[0]).backgroundColor) + ")'><td>" +td[0].innerText + "</td><td>" + td[1].innerText + "</td><td>" + td[2].innerText + "</td><td>" + td[3].innerText + "</td><td>" + td[5].innerText + "</td><td>" + td[6].innerText + "</td><td>" + td[7].innerText + "</td><td>" + td[8].innerText + "</td><td>" + td[10].innerText + "</td><td>" + td[11].innerText + "</td><td>" + td[12].innerText + "</td></tr>";
+        }
+        document.getElementById('searchTaskBody').innerHTML = tr;
+    }else{
+        cancelFindTasks();
+    }
+
+
+}
+/**гарантийная/платная */
+function getWarranty(color){
+    if (color === "rgb(60, 179, 113)") return 1;
+    if (color === "rgb(175, 205, 231)") return 0;
+}
+/**функция поиска в БД */
+async function findTasksOnDB(){
+    console.log('поиск по дб')
+
+}
+/**отмента поиска*/
+function cancelFindTasks(){
+    if (document.getElementById('SearchPlaceTasks')){
+        document.getElementById('inputSearchTasks').value = "";
+        closeFilter('SearchPlaceTasks');
+    }
+
+}
+/**рисуем панель фильтра */
+function createFilterTasks(){
+    if (!document.getElementById('filterTasks')){
+        let filter = document.createElement('div');
+        filter.id = "filterTasks";
+        filter.className = "filterTasks";
+        filter.innerHTML = `<label for="checkNumber">№ Заявки</label><input type="radio" id="checkNumber" name="radioFilter" value="number" checked><label for="checkName">ФИО</label><input type="radio" id="checkName" name="radioFilter" value="name"><label for="checkPhone">Телефон</label><input type="radio" id="checkPhone" name="radioFilter" value="phone"><label for="checkSerial">Серийник</label><input type="radio" id="checkSerial" name="radioFilter" value="serial"><label for="checkModel">Модель</label><input type="radio" id="checkModel" name="radioFilter" value="model"><hr><label for="backSearch">Глобальный</label><input type="checkbox" id="backSearch">`;
+        document.body.append(filter);
+
+        window.addEventListener('click', () => closeFilterByClick(event, 'filterTasks'));
+
+
+        let filterNow = sessionStorage.getItem('filterTask');
+        let inputs = document.getElementById('filterTasks').querySelectorAll('input');
+        for (let i=0; i<inputs.length;i++){
+            inputs[i].addEventListener('change', checkFilterTasks, this.value);
+            if (inputs[i].value == filterNow){ inputs[i].checked = true}
+        }
+        let filterGlobal = sessionStorage.getItem('filterGlobal');
+        let globalCheck = document.getElementById('backSearch');
+        if (filterGlobal == 1) globalCheck.checked = true;
+    }else{
+        closeFilter();
+    }
+}
+/**обработка фильтра */
+function checkFilterTasks(value){
+    document.getElementById('inputSearchTasks').value = "";
+    let inputField = document.getElementById('inputSearchTasks');
+    switch(value.target.value){
+        case 'number': {
+            sessionStorage.setItem('filterTask', value.target.value);
+            inputField.placeholder = "Поиск по № заявки";
+            break};
+        case 'name': {
+            sessionStorage.setItem('filterTask', value.target.value);
+            inputField.placeholder = "Поиск по ФИО";
+            break};
+        case 'phone': {
+            sessionStorage.setItem('filterTask', value.target.value);
+            inputField.placeholder = "Поиск по телефону";
+            break};
+        case 'serial': {
+            sessionStorage.setItem('filterTask', value.target.value);
+            inputField.placeholder = "Поиск по серийнику";
+            break};
+        case 'model': {
+            sessionStorage.setItem('filterTask', value.target.value);
+            inputField.placeholder = "Поиск по модели";
+            break};
+        case 'on': {
+            if (value.target.checked){
+                sessionStorage.setItem('filterGlobal', '1');
+            }else{
+                sessionStorage.setItem('filterGlobal', '0');
+            };
+            break};
+    }
+    
+
+}
+/**закрытие по клику вне окна */
+function closeFilterByClick(event, id){
+    let filter = document.getElementById(id);
+    if (filter){
+        let cordFilter = filter.getBoundingClientRect();
+
+        let lessX = event.clientX < cordFilter.x;
+        let lessY = event.clientY < cordFilter.y - 30;
+        let moreX = event.clientX > cordFilter.x + cordFilter.width;
+        let moreY = event.clientY > cordFilter.y + cordFilter.height;
+
+        if (lessX || lessY || moreX || moreY){
+            document.getElementById('inputSearchTasks').value = "";
+            closeFilter(id);
+        }
+    }
+}
+/**закрытие окна фильтра */
+function closeFilter(id){
+    cancelForm(id);
+    window.removeEventListener('click', () => closeFilterByClick(event, id));
 }

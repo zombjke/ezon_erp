@@ -18,7 +18,7 @@ function addSelfButtons(){
 /**таблица списка наличия товаров на складе */
 function listWerehouse(){
     addTopButtons();
-    addSerchBar();
+    addSearchBar();
     createTableOfWerehouse(1);
     getDataToWerehouseTable(1);
 }
@@ -410,7 +410,7 @@ function findPart(){
     }
 }
 /**поисковая панель */
-function addSerchBar(){
+function addSearchBar(){
     let searchBar = document.createElement('div');
     searchBar.className = "searchWereh";
     searchBar.id = "searchWereh";
@@ -424,6 +424,7 @@ function cancelSearch(){
         document.getElementById('searchIcon').className = 'bi bi-search';
         document.getElementById('inputSearchWereh').value = "";
         cancelForm('searchPlace');
+        window.removeEventListener('click', cancelByClick, event);
     }
     
 }
@@ -436,22 +437,27 @@ function searchPlace(){
         place.innerHTML = `<table id="placeTable"><thead><tr><th>Парт номер</th><th>Описание</th><th>Количество</th></tr></thead><tbody id="searchTable"></tbody></table>`;
         document.body.append(place);
       
-        /**закрытие по клику во вне поиска */
-    window.addEventListener('click', function(event){
-        let searchPlace = document.getElementById('searchPlace');
-        if (searchPlace){
-            let cordsPlace = searchPlace.getBoundingClientRect();
-
-            let lessX = event.clientX < cordsPlace.x;
-            let lessY = event.clientY < cordsPlace.y - 30;
-            let moreX = event.clientX > cordsPlace.x + cordsPlace.width;
-            let moreY = event.clientY > cordsPlace.y + cordsPlace.height;
-
-            if (lessX || lessY || moreX || moreY){
-                cancelSearch();
-            }
-        }
         
-    });
+    window.addEventListener('click', cancelByClick, event);
+        
     }
 }
+/**закрытие по клику во вне поиска */
+function cancelByClick(event){
+    let searchPlace = document.getElementById('searchPlace');
+    if (searchPlace){
+        let cordsPlace = searchPlace.getBoundingClientRect();
+
+        let lessX = event.clientX < cordsPlace.x;
+        let lessY = event.clientY < cordsPlace.y - 30;
+        let moreX = event.clientX > cordsPlace.x + cordsPlace.width;
+        let moreY = event.clientY > cordsPlace.y + cordsPlace.height;
+
+        if (lessX || lessY || moreX || moreY){
+            cancelSearch();
+        }
+    }
+}    
+
+
+

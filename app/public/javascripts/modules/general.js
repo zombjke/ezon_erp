@@ -27,7 +27,8 @@ function usersPage(){
 /**обработка кнопки СИСТЕМА ЗАЯВОК */
 function tasksPage(){
     addTopButtons();      // стираем содержимое страницы и добавляем вверхнее меню
-    addButton('addNewTaskButton', '+', newTask); //кнопка новойзаявки
+    addButton('addNewTaskButton', '+', newTask);  //кнопка новойзаявки
+    createSearchBarTasks(); //панель поиска
     createTableOfTasks(); // таблица заявок
     getDataFromTasks(); // заполняем таблицу заявками
 }
