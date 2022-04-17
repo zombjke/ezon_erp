@@ -28,7 +28,10 @@
     background-color: white;
     border-radius: 4px;
     border: 1px solid grey;
+    
+    transition: ease-out 500ms;
 }
+
 .searchPlace table{
     width: 100%;
     max-width: 100%;
@@ -36,7 +39,11 @@
     border-collapse: collapse;
 }
 .searchPlace table tr {
+    transition: ease-out 300ms;
     border-bottom: 1px solid grey;
+}
+.searchPlace table tr:hover {
+    background-color:rgb(210, 210, 210);
 }
 .searchPlace table th{
     background-color: #a0a0a052;
@@ -54,30 +61,53 @@
     display: inline-block;
     position: fixed;
     top: 75px;
-    -webkit-transition-duration: 0.7s; /* Safari */
-    transition-duration: 0.7s;
-    
+     /* -webkit-transition-duration: 0.7s;
+    transition-duration: 0.7s;  */
+    /* transition: transform 500ms ease-out; */
+    transition: ease-out 500ms;
+    width: 30px;
+}
+ .searchWereh:hover{
+    border-color: blue;
+    width: 250px;
+} 
+.searchWereh:focus-within{
+    border-color: blue;
+    width: 250px;
 }
 .searchWereh input{
-    opacity: 100%;
+    
+    margin-left: 30px;
     border: none;
     outline: none;
     font-size: 18px;
+    opacity: 0%;
+    transition: ease-out 500ms;
 }
-.searchWereh input::placeholder{
-    font-size: 16px;
-}
-.searchWereh:hover{
-    border-color: blue;
-    
-}
+ .searchWereh input:hover{
+    max-width: 200px;
+    opacity: 100%;
 
-.searchWereh input:hover{
+}
+ 
+.searchWereh input:focus{
     opacity: 100%;
 }
-.searchIcon:hover{
-    color: blue;
+
+.searchIcon{
+    max-width: fit-content;
+    position:absolute;
+    top: 4px;
+    left: 0px;
+    padding-left: 12px;
+    padding-top: 4px;
+    
 }
+ .searchIcon:hover{
+    color: blue;
+    
+} 
+
 #logOutButton:hover{
     background-color: rgb(201, 77, 77);
 }
@@ -391,7 +421,7 @@ width: 5%;
 }
 
 .writeOff{
-    width: 950px;
+    width: 800px;
 }
 .addToContent, .writeOffContent{
 
@@ -399,11 +429,13 @@ width: 5%;
     overflow-x: auto;
 }
 .writeOffContent{
+    margin-top: 0%;
+    margin-left: 0%;
+}
+.writeOffContent input, select{
     margin-top: 1%;
     margin-left: 1%;
-}
-.writeOffContent input{
-    margin-left: 1%;
+    
 }
 
 

@@ -371,30 +371,6 @@ function setTypeWriteOff(type){
 function checkTaskNumber(taskNumber){
     if(taskNumber >= 1) {return taskNumber;} else {return ""}
 }
-/**поиск детали */
-function findPart(){
-    let parts = document.getElementById('werehouseTbody').querySelectorAll('tr');
-    let body = document.getElementById('inputSearchWereh').value;
-    if(body.length>0){
-        searchPlace();
-        document.getElementById('searchIcon').className = 'bi bi-x-circle';
-    }else{
-        document.getElementById('searchIcon').className = 'bi bi-search';
-        cancelSearch();
-        
-    }
-    let tr = "";
-    if(body.length>3){
-        for(let i=0;i<parts.length;i++){
-            let td = parts[i].querySelectorAll('td');
-            if (td[1].innerText.toUpperCase().includes(body)){
-                tr += "<tr><td>" + td[1].innerText + "</td><td>" + td[2].innerText + "</td><td>" + td[3].innerText + "</td></tr>";
-               
-            }
-        }
-        document.getElementById('searchTable').innerHTML = tr;
-    }
-}
 /**детали по запчасти */
 function detailPartList(id){
 
@@ -407,13 +383,38 @@ function detailArrival(id){
 function detailWriteOff(id){
 
 }
-
+/**поиск детали */
+function findPart(){
+    let parts = document.getElementById('werehouseTbody').querySelectorAll('tr');
+    let body = document.getElementById('inputSearchWereh').value;
+    let tr = "";
+    if(body.length>0){
+         document.getElementById('searchIcon').className = 'bi bi-x-circle';
+    }else{
+        document.getElementById('searchIcon').className = 'bi bi-search';
+        cancelSearch();
+    }
+    
+    if(body.length>3){
+        searchPlace();
+        for(let i=0;i<parts.length;i++){
+            let td = parts[i].querySelectorAll('td');
+            if (td[1].innerText.toUpperCase().includes(body)){
+                tr += "<tr><td>" + td[1].innerText + "</td><td>" + td[2].innerText + "</td><td>" + td[3].innerText + "</td></tr>";
+            }
+        }
+        if (tr.length < 1){
+            tr = "<tr><td rowspan='3' colspan='3' >По вашему запросу ничего небыло найдено...</td></tr><tr></tr><tr></tr>"
+        }
+        document.getElementById('searchTable').innerHTML = tr;
+    }
+}
 /**поисковая панель */
 function addSerchBar(){
     let searchBar = document.createElement('div');
     searchBar.className = "searchWereh";
     searchBar.id = "searchWereh";
-    searchBar.innerHTML = `<input type="text" placeholder="Поиск по партномеру..." id="inputSearchWereh"></input><span class="searchIcon" onclick="cancelSearch()"><i id="searchIcon" class="bi bi-search"></i></span>`;
+    searchBar.innerHTML = `<span class="searchIcon" onclick="cancelSearch()"><i id="searchIcon" class="bi bi-search"></i></span><input type="text" placeholder="Поиск по партномеру..." id="inputSearchWereh"></input>`;
     document.body.append(searchBar);
     document.getElementById('inputSearchWereh').addEventListener('input', findPart);
 }
@@ -432,7 +433,25 @@ function searchPlace(){
         let place = document.createElement('div')
         place.className = "searchPlace";
         place.id = "searchPlace";
-        place.innerHTML = `<table><thead><tr><th>Парт номер</th><th>Описание</th><th>Количество</th></tr></thead><tbody id="searchTable"></tbody></table>`;
+        place.innerHTML = `<table id="placeTable"><thead><tr><th>Парт номер</th><th>Описание</th><th>Количество</th></tr></thead><tbody id="searchTable"></tbody></table>`;
         document.body.append(place);
+      
+        /**закрытие по клику во вне поиска */
+    window.addEventListener('click', function(event){
+        let searchPlace = document.getElementById('searchPlace');
+        if (searchPlace){
+            let cordsPlace = searchPlace.getBoundingClientRect();
+
+            let lessX = event.clientX < cordsPlace.x;
+            let lessY = event.clientY < cordsPlace.y - 30;
+            let moreX = event.clientX > cordsPlace.x + cordsPlace.width;
+            let moreY = event.clientY > cordsPlace.y + cordsPlace.height;
+
+            if (lessX || lessY || moreX || moreY){
+                cancelSearch();
+            }
+        }
+        
+    });
     }
 }
