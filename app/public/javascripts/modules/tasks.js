@@ -532,28 +532,38 @@ function createFilterTasks(){
 }
 /**обработка фильтра */
 function checkFilterTasks(value){
-    document.getElementById('inputSearchTasks').value = "";
+    cancelFindTasks();
     let inputField = document.getElementById('inputSearchTasks');
     switch(value.target.value){
         case 'number': {
             sessionStorage.setItem('filterTask', value.target.value);
             inputField.placeholder = "Поиск по № заявки";
+            closeFilter('filterTasks');
+            inputField.focus();
             break};
         case 'name': {
             sessionStorage.setItem('filterTask', value.target.value);
             inputField.placeholder = "Поиск по ФИО";
+            closeFilter('filterTasks');
+            inputField.focus();
             break};
         case 'phone': {
             sessionStorage.setItem('filterTask', value.target.value);
             inputField.placeholder = "Поиск по телефону";
+            closeFilter('filterTasks');
+            inputField.focus();
             break};
         case 'serial': {
             sessionStorage.setItem('filterTask', value.target.value);
             inputField.placeholder = "Поиск по серийнику";
+            closeFilter('filterTasks');
+            inputField.focus();
             break};
         case 'model': {
             sessionStorage.setItem('filterTask', value.target.value);
             inputField.placeholder = "Поиск по модели";
+            closeFilter('filterTasks');
+            inputField.focus();
             break};
         case 'on': {
             if (value.target.checked){

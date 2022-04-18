@@ -132,9 +132,17 @@
 }
 #addNewUserButton, #addNewTaskButton, #findPartButton, #addToButton, #writeOffButton{
     position: fixed;
-    top: 65px;
-    background-color: #7190d1;
+    top: 75px;
+    border: 1px solid grey;
+    border-radius: 4px;
+    background-color: #ffffff;
     z-index: 100;
+    
+    width: 30px;
+    height: 25px;
+    padding: 5px;
+    margin: 0px;
+    padding-left: 10px;
 }
 .werehouseMenu {
     z-index: 200;
@@ -171,7 +179,7 @@
 }
 
 #addNewUserButton:hover, #addNewTaskButton:hover, #listWerehouseButton:hover, #arrivalToWerehouseButton:hover, #writeOffFromWerehouseButton:hover, #findPartButton:hover, #addToButton:hover, #writeOffButton:hover {
-    background-color: #767b86;
+    background-color: #4764a3;
     color: white;
 }
 
@@ -300,7 +308,7 @@ width: 5%;
 
 
 
-.userDetailHeader, .newUserFormHeader, .priceHeader, .addNewTaskHeader, .addToHeader, .writeOffHeader, .detailTaskFormIdHeader, .checkTypeOfWorkHeader {
+.userDetailHeader, .checkCloseFormHeader, .newUserFormHeader, .priceHeader, .addNewTaskHeader, .addToHeader, .writeOffHeader, .detailTaskFormIdHeader, .checkTypeOfWorkHeader {
     height: 20px;
     background-color: #858282;
     cursor: move;
@@ -349,7 +357,7 @@ width: 5%;
     padding-left: 1%;
     padding-top: 2%;
 }
-.userDetailSubButtons, .priceSubButtons, .addToSubButtons, .writeOffSubButtons, .detailTaskSubButtons, .newTaskSubButtons, .typeOfWorksubButtons {
+.userDetailSubButtons, .checkCloseFormSubButtons, .priceSubButtons, .addToSubButtons, .writeOffSubButtons, .detailTaskSubButtons, .newTaskSubButtons, .typeOfWorksubButtons {
     margin-top: 10px;
     margin-bottom: 10px;
     display: flex;
@@ -361,7 +369,7 @@ width: 5%;
 .submitButton {
    margin-left: 10%;
    margin-right: 10%;
-    background-color: #91b7c9; /* Green */
+    background-color: #46aedf; /* Green */
     border: none;
     border-radius: 5px;
     color: white;
@@ -437,8 +445,17 @@ width: 5%;
     margin-left: 1%;
     
 }
-
-
+.checkCloseForm{
+    text-align: center;
+    z-index: 9999;
+    background-color: white;
+    position: fixed;
+    top: 35%;
+    left: 35%;
+    width: 350px;
+    height: 150px;
+    box-shadow: 0px 0px 15px -3px #000000;
+}
 .detailTaskInfo, .addToContent table, .writeOffContent table {
     text-align: center;
     line-height: 30px;
@@ -638,8 +655,8 @@ width: 5%;
     position: fixed;
     right: 30px;
     top: 115px;
-    max-width: 1000px;
-    width: 1000px;
+    max-width: 1500px;
+    width: 1500px;
     height: 500px;
     overflow: auto;
     border: 1px solid grey;
@@ -649,4 +666,5 @@ width: 5%;
     text-align: center;
     border-collapse: collapse;
     width: 100%;
+    word-break: break-all;
 }
