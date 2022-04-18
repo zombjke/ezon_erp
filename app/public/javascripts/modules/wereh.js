@@ -42,7 +42,7 @@ function addTo(){
         let form = document.createElement('form');
         form.id = 'addToId';
         form.className = 'addTo';
-        form.innerHTML = `<div id="addToIdHeader" class="addToHeader">ПОПОЛНЕНИЕ склада</div><div id="addToContent" class="addToContent"><select id="fromWho"><option value="0">Покупка</option><option value="1">EPSON</option></select><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Количество</td><td>Цена</td></tr></thead><tbody id="addToBody"></tbody></table></div><div class="addToSubButtons"><input type="button" class="submitButton" onclick="saveAddTo()" value="Сохранить"><input type="button" class="submitButton" onclick="cancelForm('addToId')" value="Отмена"></div>`;
+        form.innerHTML = `<div id="addToIdHeader" class="addToHeader">ПОПОЛНЕНИЕ склада</div><div id="addToContent" class="addToContent"><select id="fromWho"><option value="0">Покупка</option><option value="1">EPSON</option></select><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Количество</td><td>Цена</td></tr></thead><tbody id="addToBody"></tbody></table></div><div class="addToSubButtons"><input type="button" class="submitButton" onclick="saveAddTo()" value="Сохранить"><input type="button" class="submitButton" onclick="checkClose('addToId')" value="Отмена"></div>`;
         document.body.append(form);
         addRowForWerehouse(0);
         dragElement(document.getElementById(form.id));
@@ -54,7 +54,7 @@ function writeOff(){
         let form = document.createElement('form');
         form.id = 'writeOffId';
         form.className = 'writeOff';
-        form.innerHTML = `<div id="writeOffIdHeader" class="writeOffHeader">СПИСАНИЕ со склада</div><div id="writeOffContent" class="writeOffContent"><select id="type"><option value="0">Гарантийный ремонт</option><option value="1">Продажа</option><option value="2">Списание</option><option value="3">обл. гарантия</option></select><input type="number" min="1" id="taskNumber" placeholder="№ заявки"><input type="text" id="where" placeholder="ФИО инженера"><div class="sumAllDiv"><label>ИТОГО</label><input type="text" id="sumAll" readonly></div><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Наличие</td><td>Количество</td><td width="20px">Мин цена</td><td>Цена</td><td>Сумма</td></tr></thead><tbody id="writeOffBody"></tbody></table></div><div class="writeOffSubButtons"><input type="button" class="submitButton" onclick="checkWriteOff()" value="Сохранить"><input type="button" class="submitButton" onclick="checkClose()" value="Отмена"></div>`;
+        form.innerHTML = `<div id="writeOffIdHeader" class="writeOffHeader">СПИСАНИЕ со склада</div><div id="writeOffContent" class="writeOffContent"><select id="type"><option value="0">Гарантийный ремонт</option><option value="1">Продажа</option><option value="2">Списание</option><option value="3">обл. гарантия</option></select><input type="number" min="1" id="taskNumber" placeholder="№ заявки"><input type="text" id="where" placeholder="ФИО инженера"><div class="sumAllDiv"><label>ИТОГО</label><input type="text" id="sumAll" readonly></div><table><thead><tr><td></td><td>Партномер</td><td>Описание</td><td>Наличие</td><td>Количество</td><td width="20px">Мин цена</td><td>Цена</td><td>Сумма</td></tr></thead><tbody id="writeOffBody"></tbody></table></div><div class="writeOffSubButtons"><input type="button" class="submitButton" onclick="checkWriteOff()" value="Сохранить"><input type="button" class="submitButton" onclick="checkClose('writeOffId')" value="Отмена"></div>`;
         document.body.append(form);
         writeOffRowForWerehouse(0);
         dragElement(document.getElementById(form.id));
@@ -72,18 +72,21 @@ function writeOff(){
     }
 }
 /**проверка закрытия */
-function checkClose(){
-    let filed = document.createElement('div');
-    filed.id = "checkCloseFormId";
-    filed.className = "checkCloseForm";
-    filed.innerHTML = `<div id="checkCloseFormIdHeader" class="checkCloseFormHeader">Подтвердите отмену</div><div><h1>Вы уверены?</h1></div><div class="checkCloseFormSubButtons"><input type="button" class="submitButton" onclick="closeWriteOff()" value="Подтвердить"><input type="button" class="submitButton" onclick="cancelForm('checkCloseFormId')" value="Отмена"></div>`;
-    document.body.append(filed);
-    dragElement(document.getElementById(filed.id));
+function checkClose(id){
+    if(!document.getElementById('checkCloseFormId')){
+        let filed = document.createElement('div');
+        filed.id = "checkCloseFormId";
+        filed.className = "checkCloseForm";
+        filed.innerHTML = `<div id='checkCloseFormIdHeader' class='checkCloseFormHeader'>Подтвердите отмену</div><div><h1>Вы уверены?</h1></div><div class='checkCloseFormSubButtons'><input type='button' class='submitButton' onclick='closeWriteOff(${id})' value='Подтвердить'><input type='button' class='submitButton' onclick="cancelForm('checkCloseFormId')" value='Отмена'></div>`;
+        document.body.append(filed);
+        dragElement(document.getElementById(filed.id));
+    }
+    
 }
 /**подтверждение закрытия */
-function closeWriteOff(){
+function closeWriteOff(id){
     cancelForm('checkCloseFormId');
-    cancelForm('writeOffId');
+    cancelForm(id.id);
 
 }
 /**сохранение формы пополнения склада */
