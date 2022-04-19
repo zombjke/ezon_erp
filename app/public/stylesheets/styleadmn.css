@@ -668,3 +668,13 @@ width: 5%;
     width: 100%;
     word-break: break-all;
 }
+#searchTaskBody tr{
+    opacity: 0;
+    animation-iteration-count: 1;
+    animation: rowVisible 500ms ease-out forwards;
+}
+
+@keyframes rowVisible {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

@@ -199,7 +199,7 @@ async function getDataPartsFromTask(id){
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
         },
-        });
+    });
     let result = await response.json();
     let orderStatus = document.getElementById('orderStatus');
     //console.log(result);
@@ -452,7 +452,7 @@ function findTasksOnDocument(){
 
     let body = document.getElementById('inputSearchTasks').value;
     let trs = document.getElementById('tasksTableBody').querySelectorAll('tr');
-    let tr = "";
+    let tr = " ";
     let where = 0;
     let searchFilter = sessionStorage.getItem('filterTask');
     switch(searchFilter){
@@ -472,7 +472,7 @@ function findTasksOnDocument(){
             where = 6;
             break};
     }
-
+    
     if (body.length > 0){
         createSearchPlaceTasks();
         for(let i=0;i<trs.length;i++){
